@@ -16,6 +16,7 @@
 ### Trouble Shooting
 
 ### 라이브러리
+- 스타일 적용 : `styled-components`
 
 ### 환경설정
 
