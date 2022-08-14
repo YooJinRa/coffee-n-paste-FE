@@ -1,10 +1,17 @@
-// ::: 기본 Style 적용 확인용
-import StyleTest from './StyleTest';
+// App.js
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+import PostingPage from './pages/PostingPage';
 
 function App() {
   return (
-    // ::: 기본 Style 적용 확인용
-    <StyleTest />
+    <BrowserRouter>
+      <Routes>
+        {/* <Route path='/' element={<MainPage />} /> */}
+        <Route path='/post/' element={<PostingPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
