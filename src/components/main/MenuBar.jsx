@@ -1,18 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import { useSelector } from "react-redux/es/exports";
 
 function MenuBar() {
   const menus = useSelector((state) => state.mainSlice.menus);
   return (
     <StList>
-      {menus.map((menu, idx) => {
-        return (
-          <StListItem key={menu.id} id={`brand${menu.id}`}>
-            {menu.menuName}
-          </StListItem>
-        );
-      })}
+      {menus.length !== 0 ? (
+        menus.map((menu) => {
+          return (
+            <StListItem key={menu.id} id={`brand${menu.id}`}>
+              {menu.menuName}
+            </StListItem>
+          );
+        })
+      ) : (
+        <p>"메뉴별 리뷰를 보시려면 브랜드를 먼저 선택해주세요!"</p>
+      )}
     </StList>
   );
 }
@@ -26,6 +30,11 @@ const StList = styled.ul`
   align-items: center;
 
   height: 50%;
+  p {
+    font-family: var(--korean-font);
+    font-size: 24px;
+    letter-spacing: 0.2rem;
+  }
 `;
 
 const StListItem = styled.li`

@@ -1,20 +1,16 @@
-import React, { useCallback, useState } from "react";
-
+import React from "react";
 import styled from "styled-components";
 import big_logo from "../../static/big_logo.png";
 import BrandList from "./BrandList";
 import MenuBar from "./MenuBar";
-function randomColor() {
-  return Math.floor(Math.random() * 3);
-}
+
 function Header() {
-  const [menus, setMenus] = useState([]);
   return (
     <StHeader>
       <Stlogo />
       <StWrap>
         <BrandList />
-        <MenuBar menus={menus} />
+        <MenuBar />
       </StWrap>
     </StHeader>
   );

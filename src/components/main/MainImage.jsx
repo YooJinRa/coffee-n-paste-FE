@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux/es/exports";
-import userEvent from "@testing-library/user-event";
+import { useSelector } from "react-redux/es/exports";
 
 function MainImage() {
   const [mainImageUrl, setMainImageUrl] = useState("");
@@ -22,13 +21,24 @@ function MainImage() {
     getMainImage(currBrand.id);
   });
 
-  return <StWrap>{mainImageUrl}</StWrap>;
+  return <StWrap imageUrl={mainImageUrl}></StWrap>;
 }
 
 const StWrap = styled.div`
   width: 100vw;
-  height: 400px;
-  background-color: var(--blue-color);
+  height: 50vh;
+  margin-bottom: 1800px;
+
+  background: radial-gradient(
+      70% 50.83% at 70% 50.15%,
+      rgba(0, 0, 0, 0) 10%,
+      rgba(0, 0, 0, 0.5) 100%
+    ),
+    url(${({ imageUrl }) => imageUrl});
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 `;
 
 export default MainImage;

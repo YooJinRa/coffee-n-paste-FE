@@ -29,32 +29,32 @@
     {
       "id": 0,
       "brandId": 0,
-      "image": "전체사진입니다."
+      "image": "https://images.unsplash.com/photo-1623157879673-859a2d8d4522?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
     },
     {
       "id": 1,
       "brandId": 1,
-      "image": "스타벅스사진입니다"
+      "image": "https://images.unsplash.com/photo-1643034526999-a4d7a004a4b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"
     },
     {
       "id": 2,
       "brandId": 2,
-      "image": "메가커피사진입니다."
+      "image": "https://img.79plus.co.kr/megahp/common/img/main_mega.jpg"
     },
     {
       "id": 3,
       "brandId": 3,
-      "image": "할리스커피사진입니다"
+      "image": "http://res.heraldm.com/content/image/2020/09/29/20200929000520_0.jpg"
     },
     {
       "id": 4,
       "brandId": 4,
-      "image": "컴포즈커피사진입니다"
+      "image": "https://mp-seoul-image-production-s3.mangoplate.com/261717/oiteiplszfpq3o.jpg"
     },
     {
       "id": 5,
       "brandId": 5,
-      "image": "투썸플레이스사진입니다"
+      "image": "https://mp-seoul-image-production-s3.mangoplate.com/228013/gjar9ikhq6ukfp.jpg"
     }
   ],
   "menus": [

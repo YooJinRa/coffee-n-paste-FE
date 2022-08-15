@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import styled, { css } from "styled-components";
 import { __getMenusbyBrand, selectBrand } from "../../redux/modules/mainSlice";
@@ -9,7 +9,7 @@ function BrandList() {
 
   const [select, setSelect] = useState(0);
 
-  const handleMenuClick = useCallback(
+  const handleBrandClick = useCallback(
     (e) => {
       const brandId = parseInt(e.target.id[5]);
       dispatch(__getMenusbyBrand(brandId));
@@ -24,7 +24,7 @@ function BrandList() {
         return (
           <StListItem
             key={brand.id}
-            onClick={handleMenuClick}
+            onClick={handleBrandClick}
             id={`brand${brand.id}`}
             className={brand.id === select ? "active" : null}
           >

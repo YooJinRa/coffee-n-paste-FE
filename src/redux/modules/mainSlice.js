@@ -51,21 +51,6 @@ export const __getMenusbyBrand = createAsyncThunk(
   }
 );
 
-export const __getMainImagebyBrand = createAsyncThunk(
-  "main/__getMainImagebyBrand",
-  async (payload, thunkAPI) => {
-    try {
-      const imageRes = await axios.get(
-        `http://localhost:3001/images?brandId=${payload}`
-      );
-      console.log(imageRes);
-      //   return thunkAPI.fulfillWithValue(imageRes.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 const mainSlice = createSlice({
   name: "mainSlice",
   initialState,
