@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { __addPost } from "../../redux/modules/postSlice";
 import styled from "styled-components";
 
 import IconImage from "../../images/icon_image.png";
 
 const PostForm = () => {
+  const dispatch = useDispatch();
+  const brandSelect = useRef();
+  const menuSelect = useRef();
+  const contentTextarea = useRef();
+  
   // ::: 이미지 미리보기(Image Preview) 기능 구현
   // :::: => User가 PostForm에서 사진 업로드 했을때만 확인하기에 해당 컨포넌트에서 상태관리 진행
   const [ imgUrl, setImgUrl ] = useState(null);
@@ -23,8 +30,39 @@ const PostForm = () => {
     });
   }
   const uploadImage = async (event) => {
+    console.log(event.target.files[0]);
     const response = await encodeFileToBase64(event.target.files[0]);
     setImgUrl(response);
+  }
+
+  const onClickAddPost = (event) => {
+    event.preventDefault();
+    const emptyBox = [];
+    const brandId = brandSelect.current.value;
+    const menuId = menuSelect.current.value;
+    const content = contentTextarea.current.value;
+    
+    if(brandId === '' || menuId === '' || content === '' || imgUrl === null) {
+      // ::: 유효성 검사
+      brandId === '' && emptyBox.push('브랜드');
+      menuId === '' && emptyBox.push('메뉴');
+      content === '' && emptyBox.push('내용');
+      imgUrl === null && emptyBox.push('사진');
+      console.log("아래의 내용도 채워주셔야 해요!", emptyBox);
+
+    } else {
+      // ::: 게시글 등록
+      console.log(brandId, menuId, content, imgUrl);
+      const newPost = {
+        brandId: Number(brandId),
+        menuId: Number(menuId),
+        content,
+        imageUrl: imgUrl
+      }
+      dispatch(__addPost(newPost));
+      setImgUrl(null);
+    }
+
   }
 
   return (
@@ -37,31 +75,34 @@ const PostForm = () => {
         <h2>경험을 공유해주세요!</h2>
         <StRowFormBox>
           <label>브랜드</label>
-          <select name="brand">
+          <select name="brand" ref={brandSelect}>
             <option value=''>브랜드를 선택해주세요!</option>
-            <option value={`STARBUCKS`}>스타벅스</option>
-            <option value={`MEGA`}>메가커피</option>
-            <option value={`HOLLYS`}>할리스커피</option>
-            <option value={`PAIKS`}>빽다방</option>
-            <option value={`PAULBASSETT`}>폴바셋커피</option>
+            <option value='0' brandname='STARBUCKS'>스타벅스</option>
+            <option value='1' brandname='MEGA'>메가커피</option>
+            <option value='2' brandname='HOLLYS'>할리스커피</option>
+            <option value='3' brandname='PAIKS'>빽다방</option>
+            <option value='4' brandname='PAULBASSETT'>폴바셋커피</option>
           </select>
         </StRowFormBox>
 
         <StRowFormBox>
           <label>메뉴</label>
-          <select name="menu">
+          <select name="menu" ref={menuSelect}>
             <option value=''>메뉴를 선택해주세요!</option>
-            <option value={`AMERICANO`}>아메리카노</option>
-            <option value={`COLDBREW`}>콜드브루</option>
-            <option value={`CAFELATTE`}>카페라떼</option>
-            <option value={`CAPPUCCINO`}>카푸치노</option>
-            <option value={`MOCHALATTE`}>카페모카라떼</option>
+            <option value='0' menuname='AMERICANO'>아메리카노</option>
+            <option value='1' menuname='COLDBREW'>콜드브루</option>
+            <option value='2' menuname='CAFELATTE'>카페라떼</option>
+            <option value='3' menuname='CAPPUCCINO'>카푸치노</option>
+            <option value='4' menuname='MOCHALATTE'>카페모카라떼</option>
           </select>
         </StRowFormBox>
 
         <StRowFormBox>
           <label>내용</label>
-          <textarea placeholder="경험한 내용을 입력해주세요!"></textarea>
+          <textarea 
+            placeholder="경험한 내용을 입력해주세요!"
+            ref={contentTextarea}
+          ></textarea>
         </StRowFormBox>
         <StRowFormBox>
           <label>사진선택</label>
@@ -72,7 +113,7 @@ const PostForm = () => {
         </StRowFormBox>
         <StRowFormBox>
           <button>취소</button>
-          <button>등록</button>
+          <button onClick={onClickAddPost}>등록</button>
         </StRowFormBox>
       </StPostContentsBox>
     </StPostFormWrap>
