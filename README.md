@@ -3,7 +3,7 @@
 ### WHO
 - Front-end developer ::: 
   * [FE 리더] 강태훈 ::메인페이지 네비게이션, 메인 이미지 기능 구현, 상세페이지 게시글 Read, 댓글 CRUD
-  * 나유진 :: 게시글 Add, 이미지 미리보기, 메소리니 레이아웃, 무한스크롤
+  * 나유진 :: 게시글 Add, 이미지 미리보기, 이미지 리사이징, 메소리니 레이아웃, 무한스크롤
   * 고호성 :: 로그인*회원가입 모달
 
 - Back-end developer ::: 박상욱, 김휘림, 김현중, 최준우
@@ -28,6 +28,7 @@
 - thunk (미들웨어) 설치 : `yarn add redux-thunk`
 - axios(통신) 설치 : `yarn add axios` 
 - logger (개발 편하게 도와줌) 설치 : `yarn add redux-loger`
+- image resizing : `yarn add browser-image-compression`
 
 ### 환경설정
 
