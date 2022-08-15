@@ -37,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0; 
     padding: 0;
     box-sizing: border-box;
+    scroll-behavior: smooth;
   }
   // :: 배경색 설정
   body {
@@ -62,6 +63,6 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
   }
-`
+`;
 
 export default GlobalStyle;
