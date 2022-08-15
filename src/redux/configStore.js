@@ -1,12 +1,16 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import mainSlice from "./modules/mainSlice";
+import { postSlice } from './modules/postSlice';
+import logger from "redux-logger";
 
-const reducer = combineReducers({
+// ::: 여러개의 reducer 통합
+const reducer = combineReducers({ 
   mainSlice,
+  postSlice
 });
 
-const store = configureStore({
+// ::: 스토어 생성, 미들웨어 설정
+export default configureStore({
   reducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
-
-export default store;

@@ -1,14 +1,17 @@
-// ::: 기본 Style 적용 확인용
-// import StyleTest from "./StyleTest";
+// App.js
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from "./pages/MainPage";
-import { Provider } from "react-redux";
-import store from "./redux/configStore";
+import PostingPage from './pages/PostingPage';
 
 function App() {
   return (
-    <Provider store={store}>
-      <MainPage />
-    </Provider>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<MainPage />} />
+        <Route path='/post/' element={<PostingPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
