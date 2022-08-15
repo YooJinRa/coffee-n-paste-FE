@@ -11,7 +11,7 @@ const PostForm = () => {
   const menuSelect = useRef();
   const contentTextarea = useRef();
   
-  // ::: 이미지 미리보기(Image Preview) 기능 구현
+  // ::: 이미지 미리보기(Image Preview) 기능 구현, 이미지 리사이징 해야함!!!
   // :::: => User가 PostForm에서 사진 업로드 했을때만 확인하기에 해당 컨포넌트에서 상태관리 진행
   const [ imgUrl, setImgUrl ] = useState(null);
 
