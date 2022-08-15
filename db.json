@@ -1,28 +1,136 @@
 {
-  "brands": [
+  "data": [
     {
       "id": 0,
-      "brandname": "전체"
+      "brandname": "전체",
+      "image": "https://images.unsplash.com/photo-1623157879673-859a2d8d4522?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+      "menus": [
+        {
+          "id": 0,
+          "menuName": "아메리카노",
+          "brandId": 1
+        },
+        {
+          "id": 1,
+          "menuName": "콜드브루",
+          "brandId": 1
+        },
+        {
+          "id": 2,
+          "menuName": "스벅프리퀀시",
+          "brandId": 1
+        }
+      ]
     },
     {
       "id": 1,
-      "brandName": "스타벅스"
+      "brandName": "스타벅스",
+      "image": "https://images.unsplash.com/photo-1643034526999-a4d7a004a4b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80",
+      "menus": [
+        {
+          "id": 0,
+          "menuName": "아메리카노",
+          "brandId": 1
+        },
+        {
+          "id": 1,
+          "menuName": "콜드브루",
+          "brandId": 1
+        },
+        {
+          "id": 2,
+          "menuName": "스벅프리퀀시",
+          "brandId": 1
+        }
+      ]
     },
     {
       "id": 2,
-      "brandName": "메가커피"
+      "brandName": "메가커피",
+      "image": "https://img.79plus.co.kr/megahp/common/img/main_mega.jpg",
+      "menus": [
+        {
+          "id": 0,
+          "menuName": "라떼니스타",
+          "brandId": 2
+        },
+        {
+          "id": 1,
+          "menuName": "메가리카노",
+          "brandId": 2
+        },
+        {
+          "id": 2,
+          "menuName": "슬러시",
+          "brandId": 2
+        },
+        {
+          "id": 3,
+          "menuName": "깜포즈",
+          "brandId": 2
+        }
+      ]
     },
     {
       "id": 3,
-      "brandName": "할리스커피"
+      "brandName": "할리스커피",
+      "image": "http://res.heraldm.com/content/image/2020/09/29/20200929000520_0.jpg",
+      "menus": [
+        {
+          "id": 1,
+          "menuName": "브루잉코피",
+          "brandId": 3
+        },
+        {
+          "id": 2,
+          "menuName": "할리스샷!",
+          "brandId": 3
+        }
+      ]
     },
     {
       "id": 4,
-      "brandName": "컴포즈커피"
+      "brandName": "컴포즈커피",
+      "image": "https://mp-seoul-image-production-s3.mangoplate.com/261717/oiteiplszfpq3o.jpg",
+      "menus": [
+        {
+          "id": 0,
+          "menuName": "아메리카노",
+          "brandId": 1
+        },
+        {
+          "id": 1,
+          "menuName": "콜드브루",
+          "brandId": 1
+        },
+        {
+          "id": 2,
+          "menuName": "스벅프리퀀시",
+          "brandId": 1
+        }
+      ]
     },
     {
       "id": 5,
-      "brandName": "투썸플레이스"
+      "brandName": "투썸플레이스",
+      "image": "https://mp-seoul-image-production-s3.mangoplate.com/228013/gjar9ikhq6ukfp.jpg",
+      "menus": [
+        {
+          "id": 0,
+          "menuName": "아메리카노",
+          "brandId": 1
+        },
+        {
+          "id": 1,
+          "menuName": "콜드브루",
+          "brandId": 1
+        },
+        {
+          "id": 2,
+          "menuName": "스벅프리퀀시",
+          "brandId": 1
+        }
+      ]
     }
   ],
   "images": [

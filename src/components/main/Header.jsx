@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import big_logo from "../../static/big_logo.png";
 import BrandList from "./BrandList";
 import MenuBar from "./MenuBar";
+import MainImage from "../main/MainImage";
+import { __getDatabySelectBrand } from "../../redux/modules/mainSlice";
+import { useDispatch } from "react-redux";
 
 function Header() {
   return (
-    <StHeader>
-      <Stlogo />
-      <StWrap>
-        <BrandList />
-        <MenuBar />
-      </StWrap>
-    </StHeader>
+    <>
+      <StHeader>
+        <Stlogo />
+        <StWrap>
+          <BrandList />
+          <MenuBar />
+        </StWrap>
+      </StHeader>
+      <MainImage />
+    </>
   );
 }
 
