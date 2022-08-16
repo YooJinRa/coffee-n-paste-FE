@@ -7,13 +7,13 @@ import MainImage from "../main/MainImage";
 import { __getDatabySelectBrand } from "../../redux/modules/mainSlice";
 import { useDispatch } from "react-redux";
 
-function Header() {
+function Header({ onClick, userToken }) {
   return (
     <>
       <StHeader>
         <Stlogo />
         <StWrap>
-          <BrandList />
+          <BrandList onClick={onClick} userToken={userToken} />
           <MenuBar />
         </StWrap>
       </StHeader>

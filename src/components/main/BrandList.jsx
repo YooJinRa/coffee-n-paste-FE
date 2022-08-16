@@ -7,7 +7,8 @@ import {
   __getDatabySelectBrand,
 } from "../../redux/modules/mainSlice";
 
-function BrandList() {
+function BrandList(props) {
+  const userToken = props.userToken;
   const BRANDS = useSelector((state) => state.mainSlice.brands);
   const dispatch = useDispatch();
 
@@ -22,6 +23,7 @@ function BrandList() {
     },
     [dispatch]
   );
+
   return (
     <StList>
       {BRANDS.map((brand) => {
@@ -36,7 +38,9 @@ function BrandList() {
           </StListItem>
         );
       })}
-      <StButton>글 추가하기</StButton>
+      <StButton onClick={props.onClick}>
+        {userToken === null ? "로그인하기" : "글 추가하기"}
+      </StButton>
     </StList>
   );
 }

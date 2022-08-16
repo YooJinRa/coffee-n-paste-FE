@@ -3,6 +3,7 @@ import styled from "styled-components";
 import IconImage from "../../../static/icon_image.png";
 import CommentForm from "./commentSection/CommentForm";
 import CommentList from "./commentSection/CommentList";
+import ModalBg from "../../global/ModalBg";
 import { AiOutlineClose } from "react-icons/ai";
 
 function DetailModalBody({ Ref }) {
@@ -16,7 +17,7 @@ function DetailModalBody({ Ref }) {
   //나중에 listcard를 누르면 dispatch해서 게시글 내용 받아오고
   //그중에서 user, body, 구독하면됨
   return (
-    <StModalBackground ref={Ref} onClick={handleCloseModal}>
+    <ModalBg Ref={Ref} onclick={handleCloseModal}>
       <StContainer>
         <StImageContainer></StImageContainer>
         <StContentsContainer>
@@ -39,7 +40,7 @@ function DetailModalBody({ Ref }) {
           </StDetailCommentSection>
         </StContentsContainer>
       </StContainer>
-    </StModalBackground>
+    </ModalBg>
   );
 }
 const StModalBackground = styled.div`
