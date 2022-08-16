@@ -27,7 +27,9 @@ function MainImage() {
 const StWrap = styled.div`
   width: 100vw;
   height: 50vh;
-  margin-bottom: 1800px;
+  /* 1800px */
+  margin-bottom: 180px;
+
 
   background: radial-gradient(
       70% 50.83% at 70% 50.15%,
