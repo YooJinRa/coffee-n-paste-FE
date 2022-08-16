@@ -63,6 +63,10 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
   }
+  .modalOn {
+    display: block;
+    transition: all 0.3s;
+  }
 `;
 
 export default GlobalStyle;

@@ -4,22 +4,7 @@ import axios from "axios";
 import { useSelector } from "react-redux/es/exports";
 
 function MainImage() {
-  const [mainImageUrl, setMainImageUrl] = useState("");
-  const currBrand = useSelector((state) => state.mainSlice.currBrand);
-
-  const getMainImage = async (payload) => {
-    const imageRes = new Promise((resolve) => {
-      resolve(axios.get(`http://localhost:3001/images?brandId=${payload}`));
-    });
-
-    const result = await imageRes;
-    setMainImageUrl(result.data[0].image);
-    return result.status;
-  };
-
-  useEffect(() => {
-    getMainImage(currBrand.id);
-  });
+  const mainImageUrl = useSelector((state) => state.mainSlice.mainImage);
 
   return <StWrap imageUrl={mainImageUrl}></StWrap>;
 }
@@ -27,10 +12,6 @@ function MainImage() {
 const StWrap = styled.div`
   width: 100vw;
   height: 50vh;
-  /* 1800px */
-  margin-bottom: 180px;
-
-
   background: radial-gradient(
       70% 50.83% at 70% 50.15%,
       rgba(0, 0, 0, 0) 10%,

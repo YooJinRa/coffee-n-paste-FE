@@ -33,18 +33,18 @@ const initialState = {
     id: 0,
   },
   menus: [],
+  mainImage:
+    "https://images.unsplash.com/photo-1623157879673-859a2d8d4522?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
   isLoading: false,
   err: null,
 };
 
-export const __getMenusbyBrand = createAsyncThunk(
-  "main/__getMenusbyBrand",
+export const __getDatabySelectBrand = createAsyncThunk(
+  "main/__getDatabySelectBrand",
   async (payload, thunkAPI) => {
     try {
-      const menuRes = await axios.get(
-        `http://localhost:3001/menus?brandId=${payload}`
-      );
-      return thunkAPI.fulfillWithValue(menuRes.data);
+      const res = await axios.get(`http://localhost:3001/data/${payload}`);
+      return thunkAPI.fulfillWithValue(res.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -60,14 +60,15 @@ const mainSlice = createSlice({
     },
   },
   extraReducers: {
-    [__getMenusbyBrand.pending]: (state, action) => {
+    [__getDatabySelectBrand.pending]: (state, action) => {
       state.isLoading = true;
     },
-    [__getMenusbyBrand.fulfilled]: (state, action) => {
+    [__getDatabySelectBrand.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.menus = action.payload;
+      state.mainImage = action.payload.image;
+      state.menus = action.payload.menus;
     },
-    [__getMenusbyBrand.rejected]: (state, action) => {
+    [__getDatabySelectBrand.rejected]: (state, action) => {
       state.isLoading = false;
       state.err = action.payload;
     },

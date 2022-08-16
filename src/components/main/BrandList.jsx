@@ -1,7 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import styled, { css } from "styled-components";
-import { __getMenusbyBrand, selectBrand } from "../../redux/modules/mainSlice";
+import {
+  __getMenusbyBrand,
+  selectBrand,
+  __getDatabySelectBrand,
+} from "../../redux/modules/mainSlice";
 
 function BrandList() {
   const BRANDS = useSelector((state) => state.mainSlice.brands);
@@ -12,7 +16,7 @@ function BrandList() {
   const handleBrandClick = useCallback(
     (e) => {
       const brandId = parseInt(e.target.id[5]);
-      dispatch(__getMenusbyBrand(brandId));
+      dispatch(__getDatabySelectBrand(brandId));
       setSelect(brandId);
       dispatch(selectBrand(brandId));
     },
