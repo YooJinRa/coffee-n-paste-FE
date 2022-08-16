@@ -57,14 +57,14 @@ const StModalBackground = styled.div`
 const StContainer = styled.div`
   display: flex;
   background-color: #fefefe;
-  margin: 15% auto;
+  margin: 10vh auto;
   padding: 20px;
-  border: var(--border-style);
-  max-width: 1016px;
-  min-width: 768px;
-  min-height: 690px;
+  border: 4px solid #000000;
+
+  max-width: 1200px;
+  min-width: 1000px;
+  min-height: 800px;
   max-height: 90vh;
-  /* display: none; */
 `;
 
 const StImageContainer = styled.div`
