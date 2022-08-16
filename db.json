@@ -217,8 +217,329 @@
       "id": 1,
       "menuId": 1,
       "brandId": 1,
-      "content": "Coffee Review Content",
-      "postImg": "https://kimilmbucket.s3.ap-northeast-2.amazonaws.com/02_%EB%AA%A8%EC%BD%94%EC%BD%94%EC%BD%982_03_%EC%A2%8B%EC%95%84%EC%9A%94_100.png"
+      "content": "Coffee Review Content"
+    },
+    {
+      "brandId": 1,
+      "menuId": 1,
+      "content": "adssd",
+      "id": 2
+    },
+    {
+      "brandId": 1,
+      "menuId": 1,
+      "content": "afdsaf",
+      "id": 3
+    },
+    {
+      "brandId": 1,
+      "menuId": 1,
+      "content": "afdasf",
+      "id": 4
+    },
+    {
+      "brandId": 2,
+      "menuId": 1,
+      "content": "asdfsaf",
+      "id": 5
+    },
+    {
+      "brandId": 1,
+      "menuId": 1,
+      "content": "123",
+      "id": 6
+    },
+    {
+      "brandId": 1,
+      "menuId": 1,
+      "content": "asfsdf",
+      "id": 7
+    },
+    {
+      "brandId": 1,
+      "menuId": 1,
+      "content": "asfsdaf",
+      "id": 8
+    },
+    {
+      "brandId": 1,
+      "menuId": 1,
+      "content": "asfsdf",
+      "id": 9
+    },
+    {
+      "brandId": 1,
+      "menuId": 1,
+      "content": "afdsaf",
+      "id": 10
+    },
+    {
+      "brandId": 1,
+      "menuId": 2,
+      "content": "adfaf",
+      "id": 11
+    },
+    {
+      "brandId": 1,
+      "menuId": 2,
+      "content": "afsda",
+      "id": 12
+    }
+  ],
+  "posts": [
+    {
+      "postId": 1,
+      "memberNickname": "Gerard Butler",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg1.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 2,
+      "memberNickname": "Sarah",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg2.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 3,
+      "memberNickname": "Amy",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg3.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 4,
+      "memberNickname": "Brian",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg4.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 5,
+      "memberNickname": "Tommy",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg5.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 6,
+      "memberNickname": "Poll",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg6.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 7,
+      "memberNickname": "Justin Bibber",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg7.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 8,
+      "memberNickname": "Gerard Butler",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg1.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 9,
+      "memberNickname": "Sarah",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg2.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 10,
+      "memberNickname": "Amy",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg3.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 11,
+      "memberNickname": "Brian",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg4.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 12,
+      "memberNickname": "Tommy",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg5.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 83,
+      "memberNickname": "Poll",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg6.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 84,
+      "memberNickname": "Justin Bibber",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg7.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 85,
+      "memberNickname": "Gerard Butler",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg1.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 87,
+      "memberNickname": "Sarah",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg2.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 89,
+      "memberNickname": "Amy",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg3.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 90,
+      "memberNickname": "Brian",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg4.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 91,
+      "memberNickname": "Tommy",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg5.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 92,
+      "memberNickname": "Poll",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg6.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 93,
+      "memberNickname": "Justin Bibber",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg7.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 94,
+      "memberNickname": "Gerard Butler",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg1.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 95,
+      "memberNickname": "Sarah",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg2.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 96,
+      "memberNickname": "Amy",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg3.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 97,
+      "memberNickname": "Brian",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg4.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 98,
+      "memberNickname": "Tommy",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg5.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 99,
+      "memberNickname": "Poll",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg6.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    },
+    {
+      "postId": 100,
+      "memberNickname": "Justin Bibber",
+      "brandName": "starbucks",
+      "menuName": "americano",
+      "postImg": "images/postImg7.png",
+      "createdAt": "2022-08-13T23:20:12.6223004"
+    }
+  ],
+  "image": [
+    {
+      "id": 1,
+      "image": "newPostImg.postImg"
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "id": 5
+    },
+    {
+      "id": 6
+    },
+    {
+      "id": 7
+    },
+    {
+      "id": 8
+    },
+    {
+      "id": 9
     }
   ]
 }

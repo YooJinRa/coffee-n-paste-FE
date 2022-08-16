@@ -37,6 +37,7 @@ const initialState = {
     "https://images.unsplash.com/photo-1623157879673-859a2d8d4522?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
   isLoading: false,
   err: null,
+  posts: []
 };
 
 export const __getDatabySelectBrand = createAsyncThunk(
@@ -50,6 +51,20 @@ export const __getDatabySelectBrand = createAsyncThunk(
     }
   }
 );
+
+export const __getPostAll = createAsyncThunk(
+  "main/__getPostAll",
+  async (payload, thunkAPI) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/posts`);
+      return thunkAPI.fulfillWithValue(response.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+//export const __getPostbySelectedBrandMenu = createAsyncThunk();
 
 const mainSlice = createSlice({
   name: "mainSlice",
@@ -71,6 +86,19 @@ const mainSlice = createSlice({
     [__getDatabySelectBrand.rejected]: (state, action) => {
       state.isLoading = false;
       state.err = action.payload;
+    },
+
+    // 전체 게시글 불러오기
+    [__getPostAll.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getPostAll.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.posts = action.payload;
+    },
+    [__getPostAll.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
     },
   },
 });
