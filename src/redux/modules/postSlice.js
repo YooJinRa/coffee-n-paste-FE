@@ -2,7 +2,8 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-const port = '3001';
+// const server = `http://52.78.159.34`;
+const testServer = `http://localhost:3001/post`;
 
 const initialState = {
   "post": [
@@ -11,7 +12,7 @@ const initialState = {
       "menuId": 1,
       "brandId": 1,
       "content": "Coffee Review Content",
-      "imageUrl": "https://kimilmbucket.s3.ap-northeast-2.amazonaws.com/02_%EB%AA%A8%EC%BD%94%EC%BD%94%EC%BD%982_03_%EC%A2%8B%EC%95%84%EC%9A%94_100.png"
+      "postImg": "https://kimilmbucket.s3.ap-northeast-2.amazonaws.com/02_%EB%AA%A8%EC%BD%94%EC%BD%94%EC%BD%982_03_%EC%A2%8B%EC%95%84%EC%9A%94_100.png"
     },
   ],
   isLoading: false,
@@ -23,15 +24,16 @@ export const __addPost = createAsyncThunk(
   async (newPost, thunkAPI) => {
     try {
       const postResponse = await axios.post(
-        `http://localhost:${port}/post`, {
+        // `${server}/api/post`, {
+          `${testServer}`, {
           brandId: newPost.brandId,
           menuId: newPost.menuId,
           content: newPost.content,
-          imageUrl: newPost.imageUrl
+          postImg: newPost.postImg // 이미지url 문자열
         },
         {
           headers: {
-            Authorization: `Bearer AccessToken...!!`
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJOYW1lIjoic3BhcnRhIiwibWVtYmVyTmlja25hbWUiOiJHZXJhcmQgQnV0bGVyIiwiZXhwIjoxNjYwNTY3MzkwfQ.zPpMMG2iuaDClg0C8tzdEpTAJYSjpnyyDcrxmdIqekw`
           },
         }
       );
@@ -47,7 +49,6 @@ export const postSlice = createSlice({
   initialState: initialState,
   reducers: { },
   extraReducers: { 
-
     // :: 게시글
     [__addPost.pending]: (state, { payload }) => { 
       state.isLoading = true;

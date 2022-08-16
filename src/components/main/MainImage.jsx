@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import axios from "axios";
 import { useSelector } from "react-redux/es/exports";
 
