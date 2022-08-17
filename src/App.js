@@ -1,5 +1,5 @@
 // App.js
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import PostingPage from "./pages/PostingPage";
@@ -8,14 +8,15 @@ import { synchronizeToken } from "./redux/modules/userSlice";
 import { __getDatabySelectBrand } from "./redux/modules/mainSlice";
 
 function App() {
-  const storedToken = localStorage.getItem("userToken");
   const dispatch = useDispatch();
-  const handleWindowLoad = () => {
-    console.log("너왜 두번,,?");
-    // dispatch(synchronizeToken(storedToken));
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("userToken");
+    const storedId = localStorage.getItem("userId");
+    dispatch(synchronizeToken({ storedToken, storedId }));
     dispatch(__getDatabySelectBrand());
-  };
-  window.addEventListener("load", handleWindowLoad);
+  }, []);
+
   return (
     <>
       <Routes>

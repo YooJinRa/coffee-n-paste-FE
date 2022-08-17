@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import thunk from "redux-thunk";
 
 const URI = {
   BASE: process.env.REACT_APP_BASE_URI,
@@ -19,6 +20,10 @@ const initialState = {
     brandName: "전체",
     brandId: 0,
   },
+  currMenu: {
+    menuName: "",
+    menuId: 0,
+  },
   isLoading: false,
   err: null,
   posts: [],
@@ -32,7 +37,55 @@ export const __getDatabySelectBrand = createAsyncThunk(
       console.log(requestRes);
       return thunkAPI.fulfillWithValue(requestRes.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const __getUserPostList = createAsyncThunk(
+  "main/__getUserPostList",
+  async (payload, thunkAPI) => {
+    try {
+      const userToken = payload.userToken;
+      const requestRes = await axios.get(`${URI.BASE}api/my-post`, {
+        headers: {
+          Authorization: userToken,
+        },
+      });
+      console.log(requestRes);
+      return thunkAPI.fulfillWithValue(requestRes.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const __getPostFiltered = createAsyncThunk(
+  "main/__getPostFiltered",
+  async (payload, thunkAPI) => {
+    try {
+      const selectBrandId = payload.brandId;
+      const selectBrandName = payload.brandName;
+      const selectMenuId = payload.menuId;
+      const selectMenuName = payload.menuName;
+      console.log(selectBrandId, selectBrandName, selectMenuId, selectMenuName);
+      // if (selectBrandId === 0) {
+      //   const requestRes = await axios.get(`${URI.BASE}api/posts`);
+      // } else {
+      //   const requestRes = await axios.get(
+      //     `${URI.BASE}api/posts?brand=${selectBrand}`
+      //   );
+      // }
+      if (selectMenuId === undefined) {
+        const requestRes = await axios.get(
+          `${URI.BASE}api/posts?brand=${selectBrandName}`
+        );
+      } else {
+        const requestRes = await axios.get(`${URI.BASE}api/posts`);
+        //selectMenu에 따라 필터링해서 post들을 갖고올 예정 쿼리 나오면 작업 마무리하기
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -42,10 +95,10 @@ export const __getPostAll = createAsyncThunk(
   "main/__getPostAll",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(`http://3.35.230.179/api/posts`);
+      const response = await axios.get(`${URI.BASE}api/posts`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -56,6 +109,10 @@ const mainSlice = createSlice({
   reducers: {
     selectBrand: (state, action) => {
       state.currBrand = state.brands[action.payload];
+    },
+    selectMenu: (state, action) => {
+      state.currMenu.menuId = action.payload.id;
+      state.currMenu.menuName = action.payload.innerText;
     },
   },
   extraReducers: {
@@ -83,7 +140,31 @@ const mainSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    // brand, menu에 따른 게시글 불러오기
+    [__getPostFiltered.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getPostFiltered.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // state.posts = action.payload;
+    },
+    [__getPostFiltered.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //로그인한 유저의 특정정보만 불러오기
+    [__getUserPostList.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getUserPostList.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      // state.posts = action.payload;
+    },
+    [__getUserPostList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
-export const { selectBrand } = mainSlice.actions;
+export const { selectBrand, selectMenu } = mainSlice.actions;
 export default mainSlice.reducer;

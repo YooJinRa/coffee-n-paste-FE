@@ -18,6 +18,7 @@ function MainPage(props) {
       guestModalRef.current.classList.add("modalOn");
     }
   }, [userToken]);
+
   return (
     <>
       <Header onClick={handleLoginnSubmitHandler} />

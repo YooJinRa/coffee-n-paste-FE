@@ -39,6 +39,7 @@ const PostLayout = () => {
 
   useEffect(() => {
     dispatch(__getPostAll());
+    resizeGridItems();
   }, [dispatch]);
 
   // ::: load : 이미지 사이즈를 확인할 때 등. 외부 자원이 로드된 후이기 때문에 스타일이 적용된 상태이므로 화면에 뿌려지는 요소의 실제 크기를 확인할 수 있음
