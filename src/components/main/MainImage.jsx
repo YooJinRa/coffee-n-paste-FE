@@ -4,7 +4,11 @@ import axios from "axios";
 import { useSelector } from "react-redux/es/exports";
 
 function MainImage() {
-  const mainImageUrl = useSelector((state) => state.mainSlice.mainImage);
+  const currBrandId = useSelector((state) => state.mainSlice.currBrand.brandId);
+  const mainImageUrl = useSelector(
+    (state) =>
+      state.mainSlice.brands.find((el) => el.brandId === currBrandId).brandImg
+  );
 
   return <StWrap imageUrl={mainImageUrl}></StWrap>;
 }

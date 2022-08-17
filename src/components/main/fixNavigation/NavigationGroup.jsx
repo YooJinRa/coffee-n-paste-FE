@@ -4,14 +4,32 @@ import NavButton from "./NavButton";
 import { AiOutlineArrowUp, AiOutlineUser } from "react-icons/ai";
 import MainInterface from "../userInterface/MainInterface";
 
-function NavigationGroup() {
+function NavigationGroup({ Ref }) {
   const handleScrollTop = useCallback(() => {
     window.scrollTo(0, 0);
   });
   const interfaceModalRef = useRef();
+  const handleClickModalBg = (e) => {
+    e.stopPropagation();
+    const clickedEl = e.target.localName;
+    if (
+      clickedEl !== "button" &&
+      clickedEl !== "svg" &&
+      clickedEl !== "path" &&
+      !e.target.id?.includes("Modal") &&
+      interfaceModalRef.current !== undefined
+    ) {
+      interfaceModalRef.current.classList.remove("modalOn");
+    }
+  };
+  window.addEventListener("click", handleClickModalBg);
   const handleInterFaceToggle = useCallback(() => {
-    console.log(interfaceModalRef.current);
-    interfaceModalRef.current.classList.toggle("modalOn");
+    const userToken = localStorage.getItem("userToken");
+    if (userToken === null) {
+      Ref.current.classList.add("modalOn");
+    } else {
+      interfaceModalRef.current.classList.toggle("modalOn");
+    }
   });
   return (
     <StContainer>
@@ -27,6 +45,7 @@ function NavigationGroup() {
 }
 
 const StContainer = styled.div`
+  z-index: 1;
   position: fixed;
   height: 110px;
   right: 50px;

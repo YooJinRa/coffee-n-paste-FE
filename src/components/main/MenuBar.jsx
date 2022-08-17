@@ -3,13 +3,19 @@ import styled from "styled-components";
 import { useSelector } from "react-redux/es/exports";
 
 function MenuBar() {
-  const menus = useSelector((state) => state.mainSlice.menus);
+  const currBrand = useSelector((state) => state.mainSlice.currBrand);
+  const menus = useSelector(
+    (state) =>
+      state.mainSlice.brands.find((el) => el.brandId === currBrand.brandId)
+        .menus
+  );
+  console.log(menus);
   return (
     <StList>
       {menus.length !== 0 ? (
         menus.map((menu) => {
           return (
-            <StListItem key={menu.id} id={`brand${menu.id}`}>
+            <StListItem key={menu.menuId} id={`brand${menu.menuId}`}>
               {menu.menuName}
             </StListItem>
           );

@@ -1,22 +1,19 @@
 import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import styled, { css } from "styled-components";
-import {
-  __getMenusbyBrand,
-  selectBrand,
-  __getDatabySelectBrand,
-} from "../../redux/modules/mainSlice";
+import { Link } from "react-router-dom";
+import { selectBrand } from "../../redux/modules/mainSlice";
 
-function BrandList() {
+function BrandList(props) {
   const BRANDS = useSelector((state) => state.mainSlice.brands);
+  console.log(BRANDS);
   const dispatch = useDispatch();
-
+  const userToken = useSelector((state) => state.userSlice.userToken);
   const [select, setSelect] = useState(0);
 
   const handleBrandClick = useCallback(
     (e) => {
-      const brandId = parseInt(e.target.id[5]);
-      dispatch(__getDatabySelectBrand(brandId));
+      const brandId = parseInt(e.target.id);
       setSelect(brandId);
       dispatch(selectBrand(brandId));
     },
@@ -27,16 +24,18 @@ function BrandList() {
       {BRANDS.map((brand) => {
         return (
           <StListItem
-            key={brand.id}
+            key={brand.brandId}
             onClick={handleBrandClick}
-            id={`brand${brand.id}`}
-            className={brand.id === select ? "active" : null}
+            id={`${brand.brandId}`}
+            className={brand.brandId === select ? "active" : null}
           >
-            {brand.name}
+            {brand.brandName}
           </StListItem>
         );
       })}
-      <StButton>글 추가하기</StButton>
+      <StButton onClick={props.onClick}>
+        {userToken === null ? "로그인하기" : <Link to="/post">글추가하기</Link>}
+      </StButton>
     </StList>
   );
 }
@@ -58,7 +57,8 @@ const StListItem = styled.li`
   padding: 10px 15px;
   border: 3.5px solid;
   border-color: var(--bg-color);
-
+  min-width: 170px;
+  text-align: center;
   &.active {
     ${() => {
       switch (Math.floor(Math.random() * 3)) {
@@ -92,11 +92,22 @@ const StButton = styled.button`
   font-family: var(--korean-font);
   font-size: 28px;
   padding: 10px;
+  letter-spacing: 0.1rem;
   background: none;
   border: var(--border-style);
+  a {
+    font-family: var(--korean-font);
+    font-size: 28px;
+    padding: 10px;
+    background: none;
+    padding: 0;
+  }
   :hover {
     background-color: var(--green-color);
     color: var(--bg-color);
+    a {
+      color: var(--bg-color);
+    }
   }
 `;
 export default BrandList;

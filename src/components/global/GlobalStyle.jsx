@@ -42,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
   // :: 배경색 설정
   body {
     background-color: var(--bg-color);
+    min-width: 1550px;
   }
   // :: 로고 폰트 기본 세팅
   h1 {

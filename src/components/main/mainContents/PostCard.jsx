@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const PostCard = ({ post }) => {
-  return(
+  return (
     <StPostCardWrap className="gridItem">
-      <img className='content' src={post.postImg} alt={post.postId} />
+      <img className="content" src={post.postImg} alt={post.postId} />
       <StBgHover>
         <div className="bgHoverRowBox">
           <h3>{post.brandName.toUpperCase()}</h3>
@@ -15,8 +15,8 @@ const PostCard = ({ post }) => {
         </div>
       </StBgHover>
     </StPostCardWrap>
-  )
-}
+  );
+};
 
 export default PostCard;
 
@@ -33,7 +33,7 @@ const StPostCardWrap = styled.div`
   .bgHoverRowBox {
     width: 100%;
   }
-`
+`;
 const StBgHover = styled.div`
   display: flex;
   flex-direction: column;
@@ -44,12 +44,17 @@ const StBgHover = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  background: linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.2), rgba(0,0,0,0.5));
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.2),
+    rgba(0, 0, 0, 0.5)
+  );
   padding: 1.5rem;
-  z-index: 10;
+  z-index: 1;
   visibility: hidden;
   cursor: pointer;
-  transition: .1s;
+  transition: 0.1s;
 
   ${StPostCardWrap}:hover & {
     visibility: visible;
@@ -75,4 +80,4 @@ const StBgHover = styled.div`
     font-style: italic;
     color: var(--bg-color);
   }
-`
+`;
