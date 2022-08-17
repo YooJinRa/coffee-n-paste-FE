@@ -46,7 +46,7 @@ const StBgHover = styled.div`
   left: 0;
   background: linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.2), rgba(0,0,0,0.5));
   padding: 1.5rem;
-  z-index: 999;
+  z-index: 10;
   visibility: hidden;
   cursor: pointer;
   transition: .1s;
