@@ -1,11 +1,14 @@
 import React, { useCallback, useState } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { __postComment } from "../../../../redux/modules/commentSlice";
 
-function CommentForm() {
+function CommentForm({ postId }) {
   const [commentBody, setCommentBody] = useState("");
+  const dispatch = useDispatch();
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("동작!");
+    dispatch(__postComment({ postId, commentBody }));
     setCommentBody("");
   };
   const handleChangeInput = useCallback((e) => {

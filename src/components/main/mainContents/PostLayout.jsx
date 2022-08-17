@@ -35,11 +35,7 @@ const resizeGridItems = function () {
   });
 };
 
-const PostLayout = ({ 
-  handleOpen,
-  handleClose,
-  modalOpened,
-}) => {
+const PostLayout = ({ handleOpen, handleClose, modalOpened }) => {
   const dispatch = useDispatch();
   const postAll = useSelector((state) => state.mainSlice.posts);
 
@@ -57,17 +53,12 @@ const PostLayout = ({
     <StPostLayoutWrap>
       <div className="gridContainer">
         {postAll.map((post) => (
-          <PostCard key={post.postId} 
-            post={post} 
-            handleOpen={handleOpen} 
-            />
+          <PostCard key={post.postId} post={post} handleOpen={handleOpen} />
         ))}
       </div>
       {modalOpened && (
         <ModalPortal closePortal={handleClose}>
-          <DetailModalBody 
-            handleClose={handleClose} 
-          />
+          <DetailModalBody handleClose={handleClose} />
         </ModalPortal>
       )}
     </StPostLayoutWrap>

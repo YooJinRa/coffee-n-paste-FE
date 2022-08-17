@@ -3,6 +3,7 @@ import styled from "styled-components";
 import NavButton from "./NavButton";
 import { AiOutlineArrowUp, AiOutlineUser } from "react-icons/ai";
 import MainInterface from "../userInterface/MainInterface";
+import InterfaceContainer from "../userInterface/InterfaceContainer";
 
 function NavigationGroup({ Ref }) {
   const handleScrollTop = useCallback(() => {
@@ -19,6 +20,7 @@ function NavigationGroup({ Ref }) {
       !e.target.id?.includes("Modal") &&
       interfaceModalRef.current
     ) {
+      console.log("eeeeeeeeee");
       interfaceModalRef.current.classList.remove("modalOn");
     }
   };
@@ -28,12 +30,13 @@ function NavigationGroup({ Ref }) {
     if (userToken === null) {
       Ref.current.classList.add("modalOn");
     } else {
+      console.log("fffffffffffffffff");
       interfaceModalRef.current.classList.toggle("modalOn");
     }
   });
   return (
     <StContainer>
-      <MainInterface Ref={interfaceModalRef} />
+      <InterfaceContainer Ref={interfaceModalRef} />
       <NavButton bgColor="green" onclick={handleInterFaceToggle}>
         <AiOutlineUser />
       </NavButton>

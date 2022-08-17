@@ -3,17 +3,17 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { __getUserPostList } from "../../../redux/modules/mainSlice";
 
-function MyPostList() {
+function MyPostList({ onClick }) {
   const dispatch = useDispatch();
   const myPostList = useSelector((state) => state.mainSlice.myPosts);
   useEffect(() => {
     const userToken = localStorage.getItem("userToken");
     dispatch(__getUserPostList(userToken));
-  });
+  }, [dispatch]);
   return (
     <>
       <StListContainer>
-        {mypostList.length !== 0
+        {myPostList.length !== 0
           ? myPostList.map((post) => {
               return (
                 <StListCard key={post.postId}>
@@ -27,19 +27,21 @@ function MyPostList() {
             })
           : "작성한 리뷰가 없어요!"}
       </StListContainer>
-      <StGobackBtn />
+      <StGobackBtn onClick={onClick} />
     </>
   );
 }
 
 const StListContainer = styled.div`
+  width: 162px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
 `;
 
 const StListCard = styled.div`
-  width: 85%;
+  width: 100%;
   height: 60px;
   background-color: var(--bg-color);
   font-family: var(--korean-font);
@@ -56,6 +58,9 @@ const StContentsWrap = styled.div`
 `;
 
 const StGobackBtn = styled.button`
+  position: absolute;
+  right: 31px;
+  bottom: 10px;
   width: 30px;
   height: 30px;
   display: flex;

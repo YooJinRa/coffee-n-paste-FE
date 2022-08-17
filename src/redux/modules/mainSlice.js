@@ -27,7 +27,7 @@ const initialState = {
   err: null,
   posts: [],
   myPosts: [],
-  post: [],
+  post: {},
 };
 
 export const __getDatabySelectBrand = createAsyncThunk(
@@ -47,7 +47,8 @@ export const __getUserPostList = createAsyncThunk(
   "main/__getUserPostList",
   async (payload, thunkAPI) => {
     try {
-      const userToken = payload.userToken;
+      const userToken = payload;
+      console.log(userToken);
       const requestRes = await axios.get(`${URI.BASE}api/my-post`, {
         headers: {
           Authorization: userToken,
@@ -108,6 +109,7 @@ export const __getPostDetail = createAsyncThunk(
       const getDetailResponse = await axios.get(
         `${URI.BASE}api/post/${postId}`
       );
+      console.log(getDetailResponse);
       return thunkAPI.fulfillWithValue(getDetailResponse.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
