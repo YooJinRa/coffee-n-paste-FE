@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import thunk from "redux-thunk";
 
 const URI = {
   BASE: process.env.REACT_APP_BASE_URI,
@@ -75,12 +74,12 @@ export const __getPostFiltered = createAsyncThunk(
         const requestRes = await axios.get(
           `${URI.BASE}api/posts?brand=${selectBrandName}`
         );
-        return thunkAPI.fulfillWithValue(requestRes.data);
+        return thunkAPI.fulfillWithValue(requestRes.data.content);
       } else {
         const requestRes = await axios.get(
           `${URI.BASE}api/posts?brand=${selectBrandName}&menu=${selectMenuName}`
         );
-        return thunkAPI.fulfillWithValue(requestRes.data);
+        return thunkAPI.fulfillWithValue(requestRes.data.content);
         //selectMenu에 따라 필터링해서 post들을 갖고올 예정 쿼리 나오면 작업 마무리하기
       }
     } catch (error) {

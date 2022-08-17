@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import imageCompression from "browser-image-compression";
 import { useSelector } from "react-redux";
@@ -9,10 +9,8 @@ import IconImage from "../../static/icon_image.png";
 const PostForm = () => {
   const navigate = useNavigate();
   const brands = useSelector((state) => state.mainSlice.brands);
+  const [ selectedBrand, setSelectedBrand ] = useState('');
   
-
-  
-
   // ::: 게시글 등록 폼 사용자 입력값 받아오기
   const [inputs, setInputs] = useState({
     brandId: "",
@@ -26,6 +24,11 @@ const PostForm = () => {
 
   const onChangePostingForm = (event) => {
     const { value, name } = event.target;
+
+    // ::: 브랜드에 따라 메뉴 가져오기
+    if(event.target.name === 'brandId'){
+      setSelectedBrand(event.target.value);
+    }
     setInputs({
       ...inputs,
       [name]: value,
@@ -133,7 +136,8 @@ const PostForm = () => {
       console.log(error);
     }
 
-    // 초기화
+    // ::: 초기화
+    setSelectedBrand("");
     setPostImg(null);
     setInputs({
       brandId: "",
@@ -158,10 +162,18 @@ const PostForm = () => {
         <h2>경험을 공유해주세요!</h2>
         <StRowFormBox>
           <label>브랜드</label>
-          <select name="brandId" value={brandId} onChange={onChangePostingForm}>
+          <select 
+            name="brandId" 
+            value={selectedBrand} 
+            onChange={onChangePostingForm}
+          >
             <option value="">브랜드를 선택해주세요!</option>
             {brands.map((brand) => (
-              <option value={brand.brandId} brandname={brand.brandName}>
+              <option 
+                key={brand.brandId} 
+                value={brand.brandId} 
+                brandname={brand.brandName}
+              >
                 {brand.brandName}
               </option>
             ))}
@@ -170,23 +182,24 @@ const PostForm = () => {
 
         <StRowFormBox>
           <label>메뉴</label>
-          <select name="menuId" value={menuId} onChange={onChangePostingForm}>
+          <select 
+            name="menuId" 
+            value={menuId} 
+            onChange={onChangePostingForm}
+          >
             <option value="">메뉴를 선택해주세요!</option>
-            <option value="4" menuname="아메리카노">
-              아메리카노
-            </option>
-            <option value="5" menuname="카푸치노">
-              카푸치노
-            </option>
-            <option value="7" menuname="티">
-              티
-            </option>
-            <option value="8" menuname="카페라떼">
-              카페라떼
-            </option>
-            <option value="10" menuname="에이드">
-              에이드
-            </option>
+            {brands.map((brand) => (
+              brand.brandId === Number(selectedBrand) &&
+                brand.menus.map((menu) => (
+                  <option 
+                    key={menu.menuId} 
+                    value={menu.menuId} 
+                    menuname={menu.menuName}
+                  >
+                    {menu.menuName}
+                  </option>
+                ))
+            ))}
           </select>
         </StRowFormBox>
 
