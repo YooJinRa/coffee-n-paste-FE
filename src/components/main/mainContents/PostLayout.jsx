@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { __getPostAll } from "../../../redux/modules/mainSlice";
 import imagesLoaded from "imagesloaded";
 import PostCard from "./PostCard";
 import styled from "styled-components";
+import ModalPortal from "../../global/ModalPortal";
+import DetailModalBody from "../detailModal/ModalDetailBody";
 
 // ::: masorny 레이아웃 구현
 const resizeGridItems = function () {
@@ -33,7 +35,11 @@ const resizeGridItems = function () {
   });
 };
 
-const PostLayout = () => {
+const PostLayout = ({ 
+  handleOpen,
+  handleClose,
+  modalOpened,
+}) => {
   const dispatch = useDispatch();
   const postAll = useSelector((state) => state.mainSlice.posts);
 
@@ -50,9 +56,19 @@ const PostLayout = () => {
     <StPostLayoutWrap>
       <div className="gridContainer">
         {postAll.map((post) => (
-          <PostCard key={post.postId} post={post} />
+          <PostCard key={post.postId} 
+            post={post} 
+            handleOpen={handleOpen} 
+            />
         ))}
       </div>
+      {modalOpened && (
+        <ModalPortal closePortal={handleClose}>
+          <DetailModalBody 
+            handleClose={handleClose} 
+          />
+        </ModalPortal>
+      )}
     </StPostLayoutWrap>
   );
 };

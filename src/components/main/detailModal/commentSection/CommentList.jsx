@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import CommentCard from "./CommentCard";
 
-function CommentList() {
+function CommentList({ postDetail }) {
   return (
     <StCommentsWrap>
       <CommentCard
