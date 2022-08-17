@@ -1,30 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CommentCard from "./CommentCard";
+import { useDispatch, useSelector } from "react-redux";
+import { __getCommentsByPostId } from "../../../../redux/modules/commentSlice";
 
-function CommentList({ postDetail }) {
+function CommentList({ postId }) {
+  const dispatch = useDispatch();
+  const comments = useSelector((state) => state.commentSlice.comments);
+  const loginUser = localStorage.getItem("userId");
+  useEffect(() => {
+    dispatch(__getCommentsByPostId(postId));
+  }, [dispatch]);
   return (
     <StCommentsWrap>
-      <CommentCard
-        author="강머훈"
-        body="이것은 로렘대신 작성해보는 개뻘글입니다 나는 무엇을 위해 사는가"
-      />
-      <CommentCard
-        author="김기열"
-        body="이것앙ㄱㄱ아제발 빨리 완성했으면 좋겠다 진짜 제발 ㅜㅠㅜ 나는 무엇을 위해 사는가"
-      />
-      <CommentCard
-        author="서태훈"
-        body="이것은 로렘대신 작성해보는 개뻘글입니다 나는 무엇을 위해 사는가"
-      />
-      <CommentCard
-        author="장범준"
-        body="이것은 로렘대신 작성해보는 개뻘글입니다 나는 무엇을 위해 사는가"
-      />
-      <CommentCard
-        author="이얏호"
-        body="이것은 로렘대신 작성해보는 개뻘글입니다 나는 무엇을 위해 사는가"
-      />
+      {comments.map((comment) => {
+        return (
+          <CommentCard
+            key={comment.commentId}
+            id={comment.commentId}
+            author={comment.memberNickname}
+            body={comment.commentContent}
+            loginUser={loginUser === comment.memberName ? true : false}
+          />
+        );
+      })}
     </StCommentsWrap>
   );
 }

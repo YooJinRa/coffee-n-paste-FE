@@ -5,7 +5,6 @@ import CommentList from "./commentSection/CommentList";
 import { AiOutlineClose } from "react-icons/ai";
 import styled from "styled-components";
 
-
 function DetailModalBody({ handleClose }) {
   const postDetail = useSelector((state) => state.mainSlice.post);
   console.log(":: DetailModalBody__postDetail :: ", postDetail);
@@ -13,16 +12,10 @@ function DetailModalBody({ handleClose }) {
   return (
     <StContainer>
       <StImageContainer>
-        <img 
-          src={postDetail.postImg} 
-          alt={postDetail.postContent} 
-        />
+        <img src={postDetail.postImg} alt={postDetail.postContent} />
       </StImageContainer>
       <StContentsContainer>
-        <button 
-          className="close_modal" 
-          onClick={handleClose}
-        >
+        <button className="close_modal" onClick={handleClose}>
           <AiOutlineClose />
         </button>
         <StDetailBodyContainer>
@@ -31,14 +24,12 @@ function DetailModalBody({ handleClose }) {
             <span>{postDetail.menuName}</span>
           </p>
           <h2>{postDetail.memberNickName}</h2>
-          <p>
-            {postDetail.postContent}
-          </p>
+          <p>{postDetail.postContent}</p>
         </StDetailBodyContainer>
 
         <StDetailCommentSection>
-          <CommentList />
-          <CommentForm />
+          <CommentList postId={postDetail.postId} />
+          <CommentForm postId={postDetail.postId} />
         </StDetailCommentSection>
       </StContentsContainer>
     </StContainer>
@@ -88,7 +79,7 @@ const StContentsContainer = styled.div`
   .categoryTag span {
     font-family: var(--korean-font);
     font-size: 1.2rem;
-    font-weight:700;
+    font-weight: 700;
     background-color: var(--blue-color);
     border: var(--border-style);
     padding: 5px;
