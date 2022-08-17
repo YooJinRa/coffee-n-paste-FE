@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-// import { __addPost, __addPostImg } from "../../redux/modules/postSlice";
 import imageCompression from "browser-image-compression";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -72,9 +71,9 @@ const PostForm = () => {
       return;
     } 
 
-    // const URI = {
-    //     BASE: process.env.REACT_APP_BASE_URI,
-    // };
+    const URI = {
+        BASE: process.env.REACT_APP_BASE_URI,
+    };
 
     // ::: image 파일 서버 전송
     console.log(":: formData 입력 시작!");
@@ -82,12 +81,12 @@ const PostForm = () => {
     form.append('image', compressedImageFile);
     try {
       const postImageResponse = await axios.post(
-          `http://3.35.230.179/api/post/upload-image`, 
+          `${URI.BASE}/api/post/upload-image`, 
           form,
           {
             headers: {
               "Content-Type": "multipart/form-data",
-              Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJOYW1lIjoieW9vamluIiwibWVtYmVyTmlja25hbWUiOiJ5b29qaW4xIiwiZXhwIjoxNjYwNjc4NDUwfQ.yDsiJxMXTL80o5mAZkzN-foMRQIywqS3mlXkWCZNAbY`
+              Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJOYW1lIjoieW9vamluIiwibWVtYmVyTmlja25hbWUiOiJ5b29qaW5SYSIsImV4cCI6MTY2MDcxMjU5M30.O-abqDp10l0ZHKphmlSHniPY8Lm2MlJb2-0RZ7453S0`
             },
         }
       );
@@ -96,14 +95,14 @@ const PostForm = () => {
       // ::: 게시글 컨텐츠 업로드
       console.log("postContentResponse ::::", brandId, menuId, content, postImageResponse );
       const postContentResponse = await axios.post(
-        `http://3.35.230.179/api/post`, {
+        `${URI.BASE}/api/post`, {
           brandId: Number(inputs.brandId),
           menuId: Number(inputs.menuId),
           content: inputs.content,
-          postImg: postImageResponse.img
+          postImg: postImageResponse.data.img
         },{
         headers: {
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJOYW1lIjoieW9vamluIiwibWVtYmVyTmlja25hbWUiOiJ5b29qaW4xIiwiZXhwIjoxNjYwNjc4NDUwfQ.yDsiJxMXTL80o5mAZkzN-foMRQIywqS3mlXkWCZNAbY`
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJOYW1lIjoieW9vamluIiwibWVtYmVyTmlja25hbWUiOiJ5b29qaW5SYSIsImV4cCI6MTY2MDcxMjU5M30.O-abqDp10l0ZHKphmlSHniPY8Lm2MlJb2-0RZ7453S0`
         },
       }
       );

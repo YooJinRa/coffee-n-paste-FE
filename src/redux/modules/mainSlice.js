@@ -52,11 +52,12 @@ export const __getDatabySelectBrand = createAsyncThunk(
   }
 );
 
+// ::: 메인 게시글 리스트 출력
 export const __getPostAll = createAsyncThunk(
   "main/__getPostAll",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(`http://localhost:3001/posts`);
+      const response = await axios.get(`http://3.35.230.179/api/posts`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -64,7 +65,6 @@ export const __getPostAll = createAsyncThunk(
   }
 );
 
-//export const __getPostbySelectedBrandMenu = createAsyncThunk();
 
 const mainSlice = createSlice({
   name: "mainSlice",
