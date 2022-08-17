@@ -29,6 +29,7 @@
 - axios(통신) 설치 : `yarn add axios` 
 - logger (개발 편하게 도와줌) 설치 : `yarn add redux-loger`
 - image resizing : `yarn add browser-image-compression`
+- masorny 레이아웃 기능 구현 : `yarn add imagesloaded` (DOM에 부착된 이미지 로드 시점 알기 위해 사용)
 
 ### 환경설정
 

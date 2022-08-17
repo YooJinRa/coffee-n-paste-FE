@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { __addPost } from "../../redux/modules/postSlice";
+import axios from "axios";
 import imageCompression from "browser-image-compression";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import IconImage from "../../static/icon_image.png";
 
 const PostForm = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // ::: 게시글 등록 폼 사용자 입력값 받아오기
@@ -16,8 +14,9 @@ const PostForm = () => {
     menuId: '',
     content: ''
   });
-  const [validationMessage, setValidationMessage] = useState([]);
+  const [ validationMessage, setValidationMessage ] = useState([]);
   const [ postImg, setPostImg ] = useState(null);
+  const [ compressedImageFile, setCompressedImageFile ] = useState(null);
   const { brandId, menuId, content } = inputs;
 
   const onChangePostingForm = (event) => {
@@ -28,19 +27,30 @@ const PostForm = () => {
     });
   }
 
-  // ::: 이미지 미리보기(Image Preview) 및 리사이징(Resizing) 구현
-  const uploadImage = async (event) => {
-    const imageFile = event.target.files[0];
-    // :: 변환할 이미지 크기 지정
+  // ::: 이미지 용량 줄이기 설정
+  const compressImageAndGetImageFile = async (imageFile) => {
     const options = {
       maxSizeMB: 1,
       maxWidthOrHeight: 1920,
       useWebWorker: true
     }
+    const compressedFile = await imageCompression(imageFile, options);
+    return compressedFile;
+  }
+
+  // ::: 이미지 미리보기(Image Preview) 및 리사이징(Resizing) 구현
+  const previewImage = async (event) => {
+    const imageFile = event.target.files[0];
+
     try {
-      const compressedFile = await imageCompression(imageFile, options);
-      const imageResult = await imageCompression.getDataUrlFromFile(compressedFile);
-      setPostImg(imageResult);   
+      const compressedFile = await compressImageAndGetImageFile(imageFile);
+      setCompressedImageFile(compressedFile);
+
+      const finalCompressedImage = await imageCompression.getDataUrlFromFile(compressedFile);
+
+      setPostImg(finalCompressedImage);
+      console.log("preview compressedFile::", compressedFile);
+      
     } catch (error) {
       console.log("__PostForm_ploadImage error ::", error);
       alert("이미지를 업로드 하는데 문제가 생겼습니다. 다시 시도해주세요!");
@@ -48,7 +58,7 @@ const PostForm = () => {
   }
 
   // ::: 게시글 등록
-  const onClickAddPost = (event) => {
+  const onClickAddPost = async (event) => {
     event.preventDefault();
     setValidationMessage([]);
     if(inputs.brandId === '' || inputs.menuId === '' || inputs.content === '' || postImg === null) {
@@ -58,24 +68,59 @@ const PostForm = () => {
       inputs.content === '' && setValidationMessage((prev) => [...prev, '내용']);
       postImg === null && setValidationMessage((prev) => [...prev, '사진']);
       console.log("아래의 내용도 채워주셔야 해요!", validationMessage);
+      return;
+    } 
 
-    } else {
-      // ::: 게시글 등록
-      const newPost = {
-        brandId: Number(inputs.brandId),
-        menuId: Number(inputs.menuId),
-        content: inputs.content,
-        postImg: postImg
+    const URI = {
+        BASE: process.env.REACT_APP_BASE_URI,
+    };
+
+    // ::: image 파일 서버 전송
+    console.log(":: formData 입력 시작!");
+    const form = new FormData();
+    form.append('image', compressedImageFile);
+    try {
+      const postImageResponse = await axios.post(
+          `${URI.BASE}/api/post/upload-image`, 
+          form,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJOYW1lIjoieW9vamluIiwibWVtYmVyTmlja25hbWUiOiJ5b29qaW5SYSIsImV4cCI6MTY2MDcxMjU5M30.O-abqDp10l0ZHKphmlSHniPY8Lm2MlJb2-0RZ7453S0`
+            },
+        }
+      );
+      console.log(":: postImageResponse ::", postImageResponse);
+      
+      // ::: 게시글 컨텐츠 업로드
+      console.log("postContentResponse ::::", brandId, menuId, content, postImageResponse );
+      const postContentResponse = await axios.post(
+        `${URI.BASE}/api/post`, {
+          brandId: Number(inputs.brandId),
+          menuId: Number(inputs.menuId),
+          content: inputs.content,
+          postImg: postImageResponse.data.img
+        },{
+        headers: {
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJOYW1lIjoieW9vamluIiwibWVtYmVyTmlja25hbWUiOiJ5b29qaW5SYSIsImV4cCI6MTY2MDcxMjU5M30.O-abqDp10l0ZHKphmlSHniPY8Lm2MlJb2-0RZ7453S0`
+        },
       }
-      dispatch(__addPost(newPost));
-      setPostImg(null);
-      setInputs({
-        brandId: '',
-        menuId: '',
-        content: ''
-      });
-      navigate(`/`);
+      );
+      console.log(":: postContentResponse ::", postContentResponse);
+      
+    } catch (error) {
+      console.log(":: axios error::");
+      console.log(error);
     }
+
+    // 초기화
+    setPostImg(null);
+    setInputs({
+      brandId: '',
+      menuId: '',
+      content: ''
+    });
+    navigate(`/`);
   }
 
   const onClickCancel = (event) => {
@@ -138,7 +183,7 @@ const PostForm = () => {
           <input 
             type="file" 
             accept="image/jpg, image/jpeg, image/png"
-            onChange={uploadImage} />
+            onChange={previewImage} />
         </StRowFormBox>
         <StFormValidation validationCount={validationMessage}>
           아래의 내용을 입력해주세요! <br />
