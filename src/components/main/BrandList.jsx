@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
-import { selectBrand } from "../../redux/modules/mainSlice";
+import { selectBrand, __getPostFiltered } from "../../redux/modules/mainSlice";
 
 function BrandList(props) {
   const BRANDS = useSelector((state) => state.mainSlice.brands);
@@ -10,12 +10,13 @@ function BrandList(props) {
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.userSlice.userToken);
   const [select, setSelect] = useState(0);
-
   const handleBrandClick = useCallback(
     (e) => {
       const brandId = parseInt(e.target.id);
+      const brandName = e.target.innerText;
       setSelect(brandId);
       dispatch(selectBrand(brandId));
+      dispatch(__getPostFiltered({ brandId, brandName }));
     },
     [dispatch]
   );
@@ -26,7 +27,7 @@ function BrandList(props) {
           <StListItem
             key={brand.brandId}
             onClick={handleBrandClick}
-            id={`${brand.brandId}`}
+            id={brand.brandId}
             className={brand.brandId === select ? "active" : null}
           >
             {brand.brandName}

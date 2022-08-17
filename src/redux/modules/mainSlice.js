@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import thunk from "redux-thunk";
 
 const URI = {
   BASE: process.env.REACT_APP_BASE_URI,
@@ -19,9 +20,14 @@ const initialState = {
     brandName: "전체",
     brandId: 0,
   },
+  currMenu: {
+    menuName: "",
+    menuId: 0,
+  },
   isLoading: false,
   err: null,
   posts: [],
+  myPosts: [],
   post: [],
 };
 
@@ -33,7 +39,51 @@ export const __getDatabySelectBrand = createAsyncThunk(
       console.log(requestRes);
       return thunkAPI.fulfillWithValue(requestRes.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const __getUserPostList = createAsyncThunk(
+  "main/__getUserPostList",
+  async (payload, thunkAPI) => {
+    try {
+      const userToken = payload.userToken;
+      const requestRes = await axios.get(`${URI.BASE}api/my-post`, {
+        headers: {
+          Authorization: userToken,
+        },
+      });
+      console.log(requestRes);
+      return thunkAPI.fulfillWithValue(requestRes.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const __getPostFiltered = createAsyncThunk(
+  "main/__getPostFiltered",
+  async (payload, thunkAPI) => {
+    try {
+      const selectBrandName = payload.brandName;
+      const selectMenuName = payload.menuName;
+      console.log(selectBrandName, selectMenuName);
+
+      if (selectMenuName === undefined) {
+        const requestRes = await axios.get(
+          `${URI.BASE}api/posts?brand=${selectBrandName}`
+        );
+        return thunkAPI.fulfillWithValue(requestRes.data);
+      } else {
+        const requestRes = await axios.get(
+          `${URI.BASE}api/posts?brand=${selectBrandName}&menu=${selectMenuName}`
+        );
+        return thunkAPI.fulfillWithValue(requestRes.data);
+        //selectMenu에 따라 필터링해서 post들을 갖고올 예정 쿼리 나오면 작업 마무리하기
+      }
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -46,7 +96,7 @@ export const __getPostAll = createAsyncThunk(
       const response = await axios.get(`${URI.BASE}api/posts`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -56,16 +106,15 @@ export const __getPostDetail = createAsyncThunk(
   "main/__getPostDetail",
   async (postId, thunkAPI) => {
     try {
-      const getDetailResponse = await axios.get(`${URI.BASE}api/post/${postId}`);
+      const getDetailResponse = await axios.get(
+        `${URI.BASE}api/post/${postId}`
+      );
       return thunkAPI.fulfillWithValue(getDetailResponse.data);
-    } catch(error) {
+    } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
-    
   }
 );
-
-
 
 const mainSlice = createSlice({
   name: "mainSlice",
@@ -73,6 +122,10 @@ const mainSlice = createSlice({
   reducers: {
     selectBrand: (state, action) => {
       state.currBrand = state.brands[action.payload];
+    },
+    selectMenu: (state, action) => {
+      state.currMenu.menuId = action.payload.id;
+      state.currMenu.menuName = action.payload.innerText;
     },
   },
   extraReducers: {
@@ -100,6 +153,30 @@ const mainSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    // brand, menu에 따른 게시글 불러오기
+    [__getPostFiltered.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getPostFiltered.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.posts = action.payload;
+    },
+    [__getPostFiltered.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //로그인한 유저의 특정정보만 불러오기
+    [__getUserPostList.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getUserPostList.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.myPosts = action.payload;
+    },
+    [__getUserPostList.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
 
     // 특정 게시글 상세 불러오기
     [__getPostDetail.pending]: (state, action) => {
@@ -115,5 +192,5 @@ const mainSlice = createSlice({
     },
   },
 });
-export const { selectBrand } = mainSlice.actions;
+export const { selectBrand, selectMenu } = mainSlice.actions;
 export default mainSlice.reducer;

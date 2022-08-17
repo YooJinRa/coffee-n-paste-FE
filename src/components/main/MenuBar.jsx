@@ -1,21 +1,42 @@
 import React from "react";
-import styled from "styled-components";
-import { useSelector } from "react-redux/es/exports";
+import styled, { css } from "styled-components";
+import { useSelector, useDispatch } from "react-redux/es/exports";
+import { selectMenu, __getPostFiltered } from "../../redux/modules/mainSlice";
 
 function MenuBar() {
   const currBrand = useSelector((state) => state.mainSlice.currBrand);
+  const currMenu = useSelector((state) => state.mainSlice.currMenu);
   const menus = useSelector(
     (state) =>
       state.mainSlice.brands.find((el) => el.brandId === currBrand.brandId)
         .menus
   );
-  console.log(menus);
+
+  const dispatch = useDispatch();
+
+  const handleSelectMenu = (e) => {
+    const { innerText, id } = e.target;
+    dispatch(selectMenu({ innerText, id }));
+    dispatch(
+      __getPostFiltered({
+        brandId: currBrand.brandId,
+        brandName: currBrand.brandName,
+        menuId: id,
+        menuName: innerText,
+      })
+    );
+  };
   return (
     <StList>
       {menus.length !== 0 ? (
         menus.map((menu) => {
           return (
-            <StListItem key={menu.menuId} id={`brand${menu.menuId}`}>
+            <StListItem
+              key={menu.menuId}
+              id={`brand${menu.menuId}`}
+              selectMenu={currMenu.menuId}
+              onClick={handleSelectMenu}
+            >
               {menu.menuName}
             </StListItem>
           );
@@ -47,13 +68,19 @@ const StListItem = styled.li`
   font-family: var(--korean-font);
   font-size: 30px;
   padding: 10px 15px;
-  border: 3.5px solid;
+  border-bottom: 3.5px solid;
   border-color: var(--bg-color);
 
-  &.active {
+  ${(props) => {
+    if (props.id === props.selectMenu) {
+      return css`
+        border-color: var(--green-color);
+      `;
+    }
+  }}/* &.active {
     border-color: black;
     border-radius: 50%;
-  }
+  } */
 `;
 
 export default MenuBar;

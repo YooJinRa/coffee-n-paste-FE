@@ -6,7 +6,6 @@ import GuestModal from "../components/registeration/GuestModal";
 import PostLayout from "../components/main/mainContents/PostLayout";
 import { __getPostDetail } from "../redux/modules/mainSlice";
 
-
 function MainPage(props) {
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.userSlice.userToken);
@@ -41,10 +40,10 @@ function MainPage(props) {
       {/* <button onClick={handleModalOpen}>모달을 띄워봐요</button>
       <DetailModalBody Ref={modalRef} /> */}
       <GuestModal Ref={guestModalRef} />
-      <PostLayout 
+      <PostLayout
         handleOpen={handleOpen}
-        handleClose={handleClose} 
-        modalOpened={modalOpened} 
+        handleClose={handleClose}
+        modalOpened={modalOpened}
         setModalOpened={setModalOpened}
       />
 

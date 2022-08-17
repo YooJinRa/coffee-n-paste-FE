@@ -65,7 +65,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     synchronizeToken: (state, action) => {
-      state.userToken = action.payload;
+      console.log(action.payload);
+      state.userToken = action.payload.storedToken;
+      state.userId = action.payload.storedId;
     },
     userLogout: (state, action) => {
       axios.delete(`${URI.BASE}api/logout`, {

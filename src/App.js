@@ -9,14 +9,14 @@ import { __getDatabySelectBrand } from "./redux/modules/mainSlice";
 
 function App() {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     const storedToken = localStorage.getItem("userToken");
     const storedId = localStorage.getItem("userId");
     dispatch(synchronizeToken(storedToken, storedId));
     dispatch(__getDatabySelectBrand());
   }, [dispatch]);
-  
+
   return (
     <>
       <Routes>
