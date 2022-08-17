@@ -45,6 +45,7 @@ function NavigationGroup({ Ref }) {
 }
 
 const StContainer = styled.div`
+  z-index: 1;
   position: fixed;
   height: 110px;
   right: 50px;

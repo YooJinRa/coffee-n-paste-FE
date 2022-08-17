@@ -3,7 +3,7 @@ import axios from "axios";
 import { Buffer } from "buffer";
 
 const URI = {
-  BASE: process.env.REACT_APP_USER_URI,
+  BASE: process.env.REACT_APP_BASE_URI,
 };
 
 const initialState = {
