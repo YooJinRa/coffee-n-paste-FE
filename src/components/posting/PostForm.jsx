@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import imageCompression from "browser-image-compression";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import IconImage from "../../static/icon_image.png";
 
 const PostForm = () => {
   const navigate = useNavigate();
+  const brands = useSelector((state) => state.mainSlice.brands);
+  
+
+  
 
   // ::: 게시글 등록 폼 사용자 입력값 받아오기
   const [inputs, setInputs] = useState({
@@ -155,21 +160,11 @@ const PostForm = () => {
           <label>브랜드</label>
           <select name="brandId" value={brandId} onChange={onChangePostingForm}>
             <option value="">브랜드를 선택해주세요!</option>
-            <option value="1" brandname="STARBUCKS">
-              스타벅스
-            </option>
-            <option value="2" brandname="MEGA">
-              메가커피
-            </option>
-            <option value="3" brandname="HOLLYS">
-              할리스커피
-            </option>
-            <option value="4" brandname="PAIKS">
-              빽다방
-            </option>
-            <option value="5" brandname="PAULBASSETT">
-              폴바셋커피
-            </option>
+            {brands.map((brand) => (
+              <option value={brand.brandId} brandname={brand.brandName}>
+                {brand.brandName}
+              </option>
+            ))}
           </select>
         </StRowFormBox>
 
@@ -177,20 +172,20 @@ const PostForm = () => {
           <label>메뉴</label>
           <select name="menuId" value={menuId} onChange={onChangePostingForm}>
             <option value="">메뉴를 선택해주세요!</option>
-            <option value="1" menuname="AMERICANO">
+            <option value="4" menuname="아메리카노">
               아메리카노
             </option>
-            <option value="2" menuname="COLDBREW">
-              콜드브루
-            </option>
-            <option value="3" menuname="CAFELATTE">
-              카페라떼
-            </option>
-            <option value="4" menuname="CAPPUCCINO">
+            <option value="5" menuname="카푸치노">
               카푸치노
             </option>
-            <option value="5" menuname="MOCHALATTE">
-              카페모카라떼
+            <option value="7" menuname="티">
+              티
+            </option>
+            <option value="8" menuname="카페라떼">
+              카페라떼
+            </option>
+            <option value="10" menuname="에이드">
+              에이드
             </option>
           </select>
         </StRowFormBox>
@@ -222,7 +217,6 @@ const PostForm = () => {
         </StFormValidation>
         <StRowFormBox>
           <button onClick={onClickCancel}>취소</button>
-
           <button onClick={onClickAddPost}>등록</button>
         </StRowFormBox>
       </StPostContentsBox>
