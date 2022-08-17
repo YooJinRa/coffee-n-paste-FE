@@ -22,6 +22,7 @@ const initialState = {
   isLoading: false,
   err: null,
   posts: [],
+  post: [],
 };
 
 export const __getDatabySelectBrand = createAsyncThunk(
@@ -42,13 +43,29 @@ export const __getPostAll = createAsyncThunk(
   "main/__getPostAll",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(`http://3.35.230.179/api/posts`);
+      const response = await axios.get(`${URI.BASE}api/posts`);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
+// ::: 게시글 상세페이지 출력
+export const __getPostDetail = createAsyncThunk(
+  "main/__getPostDetail",
+  async (postId, thunkAPI) => {
+    try {
+      const getDetailResponse = await axios.get(`${URI.BASE}api/post/${postId}`);
+      return thunkAPI.fulfillWithValue(getDetailResponse.data);
+    } catch(error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+    
+  }
+);
+
+
 
 const mainSlice = createSlice({
   name: "mainSlice",
@@ -80,6 +97,19 @@ const mainSlice = createSlice({
       state.posts = action.payload;
     },
     [__getPostAll.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    // 특정 게시글 상세 불러오기
+    [__getPostDetail.pending]: (state, action) => {
+      state.isLoading = true;
+    },
+    [__getPostDetail.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.post = action.payload;
+    },
+    [__getPostDetail.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

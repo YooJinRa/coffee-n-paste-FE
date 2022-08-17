@@ -28,7 +28,8 @@ const StFormContainer = styled.form`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 40px;
+  height: 50px;
+  margin-top: 10px;
   input {
     font-size: 1.3rem;
     padding: 0 5px;
