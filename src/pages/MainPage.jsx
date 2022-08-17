@@ -4,6 +4,7 @@ import { useSelector } from "react-redux/es/exports";
 import DetailModalBody from "../components/main/detailModal/Body";
 import NavigationGroup from "../components/main/fixNavigation/NavigationGroup";
 import GuestModal from "../components/registeration/GuestModal";
+import PostLayout from "../components/main/mainContents/PostLayout";
 
 function MainPage(props) {
   const userToken = useSelector((state) => state.userSlice.userToken);
@@ -24,6 +25,7 @@ function MainPage(props) {
       <button onClick={handleModalOpen}>모달을 띄워봐요</button>
       <DetailModalBody Ref={modalRef} />
       <GuestModal Ref={guestModalRef} />
+      <PostLayout />
     </>
   );
 }
