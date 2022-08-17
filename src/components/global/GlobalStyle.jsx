@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
   .modalOn {
-    display: block;
+    display: block  !important;
     transition: all 0.3s;
   }
 `;

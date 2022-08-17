@@ -1,10 +1,12 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useDispatch } from "react-redux/es/exports";
 import styled from "styled-components";
 import { userLogout } from "../../../redux/modules/userSlice";
+import MyPostList from "./MyPostList";
 
 function MainInterface({ Ref }) {
   const dispatch = useDispatch();
+  const toggleRef = useRef(false);
   const [listOn, setListOn] = useState(false);
   const handleLogout = useCallback(
     (e) => {
@@ -17,26 +19,37 @@ function MainInterface({ Ref }) {
     [dispatch, Ref]
   );
 
-  const handleListToggle = () => {
-    setListOn(true);
+  const handleListToggle = (e) => {
+    e.stopPropagation();
+    setListOn(!listOn);
   };
+  console.log(toggleRef.current);
   return (
-    <StInterFaceBorder ref={Ref} id="interfaceModalBg">
-      <StInterfaceContainer id="interfaceModalContents">
-        <StInterfaceBtn onClick={handleLogout}>로그아웃</StInterfaceBtn>
-        <StInterfaceBtn onClick={handleListToggle}>내 글보기</StInterfaceBtn>
+    <StInterFaceBorder id="interfaceModalBg" listOn={listOn}>
+      <StInterfaceContainer id="interfaceModalContents" listOn={listOn}>
+        {!listOn ? (
+          <>
+            <StInterfaceBtn onClick={handleLogout}>로그아웃</StInterfaceBtn>
+            <StInterfaceBtn onClick={handleListToggle}>
+              내 글보기
+            </StInterfaceBtn>
+          </>
+        ) : (
+          <>
+            <MyPostList onClick={handleListToggle} />
+          </>
+        )}
       </StInterfaceContainer>
     </StInterFaceBorder>
   );
 }
 const StInterFaceBorder = styled.div`
-  display: none;
   position: absolute;
+  bottom: 0;
   width: 208px;
   padding: 4px;
-  height: 168px;
-  right: 65px;
-  bottom: 48px;
+  height: ${({ listOn }) => (listOn ? "328px" : "168px")};
+
   background-color: black;
   clip-path: polygon(
     0% 0%,
@@ -49,9 +62,10 @@ const StInterFaceBorder = styled.div`
   );
 `;
 const StInterfaceContainer = styled.div`
+  position: relative;
   padding-left: 11px;
   width: 200px;
-  height: 160px;
+  height: ${({ listOn }) => (listOn ? "320px" : "160px")};
   background-color: var(--blue-color);
   border: none;
   clip-path: polygon(0% 0%, 92% 0, 92% 73%, 99% 79%, 92% 85%, 92% 100%, 0 100%);

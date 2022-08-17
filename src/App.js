@@ -13,8 +13,9 @@ function App() {
   useEffect(() => {
     const storedToken = localStorage.getItem("userToken");
     const storedId = localStorage.getItem("userId");
-    dispatch(synchronizeToken(storedToken, storedId));
     dispatch(__getDatabySelectBrand());
+    if (storedToken === null) return;
+    dispatch(synchronizeToken(storedToken, storedId));
   }, [dispatch]);
 
   return (

@@ -48,14 +48,15 @@ export const __getUserPostList = createAsyncThunk(
   "main/__getUserPostList",
   async (payload, thunkAPI) => {
     try {
-      const userToken = payload.userToken;
+      const userToken = payload;
+      console.log(userToken);
       const requestRes = await axios.get(`${URI.BASE}api/my-post`, {
         headers: {
           Authorization: userToken,
         },
       });
       console.log(requestRes);
-      return thunkAPI.fulfillWithValue(requestRes.data);
+      return thunkAPI.fulfillWithValue(requestRes.data.content);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -94,7 +95,7 @@ export const __getPostAll = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const response = await axios.get(`${URI.BASE}api/posts`);
-      return thunkAPI.fulfillWithValue(response.data);
+      return thunkAPI.fulfillWithValue(response.data.content);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
