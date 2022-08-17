@@ -1,12 +1,13 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import ModalBg from "../global/ModalBg";
 import Input from "../../elements/Input";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 
 function GuestModal({ Ref }) {
+  const [isLogin, setIsLogin] = useState(true);
   const handleCloseModal = useCallback((e) => {
     const isBackGround = e.target.classList.contains("modalOn");
     e.stopPropagation();
@@ -14,13 +15,21 @@ function GuestModal({ Ref }) {
       Ref.current.classList.remove("modalOn");
     }
   });
+  const handleOnRegister = () => {
+    setIsLogin(false);
+  };
+  const handleOnLogin = (e) => {
+    e?.stopPropagation();
+    setIsLogin(true);
+  };
   return (
     <ModalBg Ref={Ref} onclick={handleCloseModal}>
       <StContainer>
-        <Routes>
-          <Route path="/login" element={LoginForm} />
-          <Route path="/register" element={RegisterForm} />
-        </Routes>
+        {isLogin ? (
+          <LoginForm onRegister={handleOnRegister} Ref={Ref} />
+        ) : (
+          <RegisterForm onLogin={handleOnLogin} />
+        )}
       </StContainer>
     </ModalBg>
   );
@@ -31,12 +40,12 @@ const StContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #fefefe;
-  margin: 18vh auto;
-  padding: 20px;
+  margin: 8% auto 0;
+  padding: 40px;
   border: 4px solid #000000;
-
-  max-width: 1000px;
-  min-width: 800px;
+  background-color: var(--bg-color);
+  max-width: 700px;
+  min-width: 600px;
   min-height: 700px;
   max-height: 800px;
 `;

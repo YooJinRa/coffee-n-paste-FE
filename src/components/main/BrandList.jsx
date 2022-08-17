@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 import {
   __getMenusbyBrand,
   selectBrand,
@@ -8,10 +9,9 @@ import {
 } from "../../redux/modules/mainSlice";
 
 function BrandList(props) {
-  const userToken = props.userToken;
   const BRANDS = useSelector((state) => state.mainSlice.brands);
   const dispatch = useDispatch();
-
+  const userToken = useSelector((state) => state.userSlice.userToken);
   const [select, setSelect] = useState(0);
 
   const handleBrandClick = useCallback(
@@ -23,7 +23,7 @@ function BrandList(props) {
     },
     [dispatch]
   );
-
+  console.log(userToken);
   return (
     <StList>
       {BRANDS.map((brand) => {
@@ -39,7 +39,7 @@ function BrandList(props) {
         );
       })}
       <StButton onClick={props.onClick}>
-        {userToken === null ? "로그인하기" : "글 추가하기"}
+        {userToken === null ? "로그인하기" : <Link to="/post">글추가하기</Link>}
       </StButton>
     </StList>
   );
@@ -62,7 +62,8 @@ const StListItem = styled.li`
   padding: 10px 15px;
   border: 3.5px solid;
   border-color: var(--bg-color);
-
+  min-width: 170px;
+  text-align: center;
   &.active {
     ${() => {
       switch (Math.floor(Math.random() * 3)) {
@@ -96,11 +97,22 @@ const StButton = styled.button`
   font-family: var(--korean-font);
   font-size: 28px;
   padding: 10px;
+  letter-spacing: 0.1rem;
   background: none;
   border: var(--border-style);
+  a {
+    font-family: var(--korean-font);
+    font-size: 28px;
+    padding: 10px;
+    background: none;
+    padding: 0;
+  }
   :hover {
     background-color: var(--green-color);
     color: var(--bg-color);
+    a {
+      color: var(--bg-color);
+    }
   }
 `;
 export default BrandList;
