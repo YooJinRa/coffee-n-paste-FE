@@ -28,7 +28,7 @@ const initialState = {
   err: null,
   posts: [],
   myPosts: [],
-  post: [],
+  post: {},
 };
 
 export const __getDatabySelectBrand = createAsyncThunk(
@@ -110,6 +110,7 @@ export const __getPostDetail = createAsyncThunk(
       const getDetailResponse = await axios.get(
         `${URI.BASE}api/post/${postId}`
       );
+      console.log(getDetailResponse);
       return thunkAPI.fulfillWithValue(getDetailResponse.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

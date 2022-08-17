@@ -1,17 +1,57 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
 import { AiOutlinePlus } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import {
+  __updateMyComment,
+  __deleteMyComment,
+} from "../../../../redux/modules/commentSlice";
 
-function CommentCard({ author, body }) {
+function CommentCard({ author, body, loginUser, id }) {
+  const [isEdit, setIsEdit] = useState(false);
+  const [newBody, setNewBody] = useState("");
+  const dispatch = useDispatch();
+  const handleUpdateComment = useCallback(() => {
+    if (isEdit) {
+      dispatch(__updateMyComment({ newCommentBody: newBody, commentId: id }));
+    }
+    setIsEdit(!isEdit);
+  }, [isEdit, newBody]);
+
+  const handleDeleteComment = useCallback(() => {
+    if (isEdit) {
+      setIsEdit(!isEdit);
+    } else {
+      dispatch(__deleteMyComment(id));
+    }
+  }, [isEdit]);
+
+  const handlenewBody = (e) => {
+    setNewBody(e.target.value);
+  };
+  console.log(isEdit);
   return (
     <StCommentContainer>
-      <span>{author}</span>
-      <span>{body}</span>
-      <StButtonGroup>
-        <AiOutlinePlus />
-        <button>수정</button>
-        <button>삭제</button>
-      </StButtonGroup>
+      {!isEdit ? (
+        <>
+          <span>{author}</span>
+          <span>{body}</span>
+        </>
+      ) : (
+        <StInput onChange={handlenewBody} />
+      )}
+
+      {loginUser && (
+        <StButtonGroup>
+          <AiOutlinePlus />
+          <button onClick={handleUpdateComment}>
+            {isEdit ? "완료" : "수정"}
+          </button>
+          <button onClick={handleDeleteComment}>
+            {isEdit ? "취소" : "삭제"}
+          </button>
+        </StButtonGroup>
+      )}
     </StCommentContainer>
   );
 }
@@ -40,6 +80,12 @@ const StCommentContainer = styled.div`
     }
   }
 `;
+
+const StInput = styled.input`
+  width: 90%;
+  height: 90%;
+`;
+
 const StButtonGroup = styled.div`
   position: absolute;
   right: 10px;
@@ -83,4 +129,4 @@ const StButtonGroup = styled.div`
     }
   }
 `;
-export default CommentCard;
+export default React.memo(CommentCard);
