@@ -27,6 +27,7 @@ const initialState = {
   isLoading: false,
   err: null,
   posts: [],
+  myPosts: [],
 };
 
 export const __getDatabySelectBrand = createAsyncThunk(
@@ -64,24 +65,20 @@ export const __getPostFiltered = createAsyncThunk(
   "main/__getPostFiltered",
   async (payload, thunkAPI) => {
     try {
-      const selectBrandId = payload.brandId;
       const selectBrandName = payload.brandName;
-      const selectMenuId = payload.menuId;
       const selectMenuName = payload.menuName;
-      console.log(selectBrandId, selectBrandName, selectMenuId, selectMenuName);
-      // if (selectBrandId === 0) {
-      //   const requestRes = await axios.get(`${URI.BASE}api/posts`);
-      // } else {
-      //   const requestRes = await axios.get(
-      //     `${URI.BASE}api/posts?brand=${selectBrand}`
-      //   );
-      // }
-      if (selectMenuId === undefined) {
+      console.log(selectBrandName, selectMenuName);
+
+      if (selectMenuName === undefined) {
         const requestRes = await axios.get(
           `${URI.BASE}api/posts?brand=${selectBrandName}`
         );
+        return thunkAPI.fulfillWithValue(requestRes.data);
       } else {
-        const requestRes = await axios.get(`${URI.BASE}api/posts`);
+        const requestRes = await axios.get(
+          `${URI.BASE}api/posts?brand=${selectBrandName}&menu=${selectMenuName}`
+        );
+        return thunkAPI.fulfillWithValue(requestRes.data);
         //selectMenu에 따라 필터링해서 post들을 갖고올 예정 쿼리 나오면 작업 마무리하기
       }
     } catch (error) {
@@ -146,7 +143,7 @@ const mainSlice = createSlice({
     },
     [__getPostFiltered.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // state.posts = action.payload;
+      state.posts = action.payload;
     },
     [__getPostFiltered.rejected]: (state, action) => {
       state.isLoading = false;
@@ -158,7 +155,7 @@ const mainSlice = createSlice({
     },
     [__getUserPostList.fulfilled]: (state, action) => {
       state.isLoading = false;
-      // state.posts = action.payload;
+      state.myPosts = action.payload;
     },
     [__getUserPostList.rejected]: (state, action) => {
       state.isLoading = false;

@@ -1,11 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux/es/exports";
 import styled from "styled-components";
 import { userLogout } from "../../../redux/modules/userSlice";
 
 function MainInterface({ Ref }) {
   const dispatch = useDispatch();
-
+  const [listOn, setListOn] = useState(false);
   const handleLogout = useCallback(
     (e) => {
       e.stopPropagation();
@@ -16,11 +16,15 @@ function MainInterface({ Ref }) {
     },
     [dispatch, Ref]
   );
+
+  const handleListToggle = () => {
+    setListOn(true);
+  };
   return (
     <StInterFaceBorder ref={Ref} id="interfaceModalBg">
       <StInterfaceContainer id="interfaceModalContents">
         <StInterfaceBtn onClick={handleLogout}>로그아웃</StInterfaceBtn>
-        <StInterfaceBtn>내 글보기</StInterfaceBtn>
+        <StInterfaceBtn onClick={handleListToggle}>내 글보기</StInterfaceBtn>
       </StInterfaceContainer>
     </StInterFaceBorder>
   );
