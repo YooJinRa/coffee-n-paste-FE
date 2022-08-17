@@ -16,7 +16,8 @@ function NavigationGroup({ Ref }) {
       clickedEl !== "button" &&
       clickedEl !== "svg" &&
       clickedEl !== "path" &&
-      !e.target.id?.includes("Modal")
+      !e.target.id?.includes("Modal") &&
+      interfaceModalRef.current !== undefined
     ) {
       interfaceModalRef.current.classList.remove("modalOn");
     }

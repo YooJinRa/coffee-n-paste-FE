@@ -1,12 +1,12 @@
-import React, { useReducer, useRef, useCallback } from "react";
+import React, { useRef, useCallback } from "react";
 import Header from "../components/main/Header";
+import { useSelector } from "react-redux/es/exports";
 import DetailModalBody from "../components/main/detailModal/Body";
 import NavigationGroup from "../components/main/fixNavigation/NavigationGroup";
 import GuestModal from "../components/registeration/GuestModal";
-import { useLocation } from "react-router-dom";
 
 function MainPage(props) {
-  const userToken = localStorage.getItem("userToken");
+  const userToken = useSelector((state) => state.userSlice.userToken);
   const modalRef = useRef();
   const guestModalRef = useRef();
   const handleModalOpen = () => {

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useDispatch } from "react-redux/es/exports";
 import styled from "styled-components";
-import { synchronizeToken, userLogout } from "../../../redux/modules/userSlice";
+import { userLogout } from "../../../redux/modules/userSlice";
 
 function MainInterface({ Ref }) {
   const dispatch = useDispatch();
@@ -9,9 +9,9 @@ function MainInterface({ Ref }) {
   const handleLogout = useCallback((e) => {
     e.stopPropagation();
     const userToken = localStorage.getItem("userToken");
-
     dispatch(userLogout(userToken));
     localStorage.clear();
+    Ref.current.classList.toggle("modalOn");
   });
   return (
     <StInterFaceBorder ref={Ref} id="interfaceModalBg">

@@ -2,39 +2,34 @@ import React, { useCallback, useState } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
-import {
-  __getMenusbyBrand,
-  selectBrand,
-  __getDatabySelectBrand,
-} from "../../redux/modules/mainSlice";
+import { selectBrand } from "../../redux/modules/mainSlice";
 
 function BrandList(props) {
   const BRANDS = useSelector((state) => state.mainSlice.brands);
+  console.log(BRANDS);
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.userSlice.userToken);
   const [select, setSelect] = useState(0);
 
   const handleBrandClick = useCallback(
     (e) => {
-      const brandId = parseInt(e.target.id[5]);
-      dispatch(__getDatabySelectBrand(brandId));
+      const brandId = parseInt(e.target.id);
       setSelect(brandId);
       dispatch(selectBrand(brandId));
     },
     [dispatch]
   );
-  console.log(userToken);
   return (
     <StList>
       {BRANDS.map((brand) => {
         return (
           <StListItem
-            key={brand.id}
+            key={brand.brandId}
             onClick={handleBrandClick}
-            id={`brand${brand.id}`}
-            className={brand.id === select ? "active" : null}
+            id={`${brand.brandId}`}
+            className={brand.brandId === select ? "active" : null}
           >
-            {brand.name}
+            {brand.brandName}
           </StListItem>
         );
       })}
