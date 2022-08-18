@@ -8,11 +8,12 @@ import logger from "redux-logger";
 const reducer = combineReducers({
   mainSlice,
   userSlice,
-  commentSlice,
+  commentSlice
 });
 
 // ::: 스토어 생성, 미들웨어 설정
 export default configureStore({
   reducer,
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+  // .concat(logger),
 });
