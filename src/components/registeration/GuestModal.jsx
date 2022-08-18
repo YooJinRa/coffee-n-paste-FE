@@ -20,7 +20,6 @@ function GuestModal({ Ref }) {
   };
   const handleOnLogin = (e) => {
     e?.stopPropagation();
-    console.log("qq");
     setIsLogin(true);
   };
   return (

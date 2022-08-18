@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const PostCard = ({post, handleOpen}) => {
-  console.log(":: postCard ::", post.postId);
+const PostCard = ({ post, handleOpen }) => {
   return (
-    <StPostCardWrap className="gridItem" onClick={() => handleOpen(post.postId)}>
+    <StPostCardWrap
+      className="gridItem"
+      onClick={() => handleOpen(post.postId)}
+    >
       <img className="content" src={post.postImg} alt={post.postId} />
       <StBgHover>
         <div className="bgHoverRowBox">
@@ -19,7 +21,7 @@ const PostCard = ({post, handleOpen}) => {
   );
 };
 
-export default PostCard;
+export default React.memo(PostCard);
 
 const StPostCardWrap = styled.div`
   position: relative;

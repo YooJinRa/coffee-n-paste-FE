@@ -76,7 +76,7 @@ const StCommentContainer = styled.div`
 
     :nth-of-type(2) {
       font-size: 1.2rem;
-      width: 76%;
+      width: 75%;
     }
   }
 `;
