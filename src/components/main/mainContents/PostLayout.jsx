@@ -5,6 +5,7 @@ import {
   __getDatabySelectBrand,
   __getPostAll,
   __getPostDetail,
+  __getPostFiltered,
 } from "../../../redux/modules/mainSlice";
 import imagesLoaded from "imagesloaded";
 import PostCard from "./PostCard";
@@ -51,14 +52,14 @@ const PostLayout = () => {
   const menuSelection = useSelector(
     (state) => state.mainSlice.currMenu.menuName
   );
-  console.log(brandSelection);
-  // const [flag, setFlag] = useState(false);
+
   const flag = useRef(0);
-  const brName = brandSelection;
-  const toinfinity = (brand, menu) => {
+
+  const toinfinity = () => {
+    console.log(brandSelection);
     if (brandSelection !== "전체") {
       dispatch(
-        __getDatabySelectBrand({
+        __getPostFiltered({
           brandName: brandSelection,
           menuName: menuSelection,
           currPage: currPage.current,
@@ -83,7 +84,6 @@ const PostLayout = () => {
       }
     }
   };
-  window.addEventListener("scroll", listenScrolling);
 
   useEffect(() => {
     dispatch(__getPostAll(0));
@@ -95,6 +95,10 @@ const PostLayout = () => {
   }, [postAll]);
   useEffect(() => {
     currPage.current = 1;
+    window.addEventListener("scroll", listenScrolling);
+    return () => {
+      window.removeEventListener("scroll", listenScrolling);
+    };
   }, [brandSelection, menuSelection]);
 
   // ::: 모달 : CreatePortal

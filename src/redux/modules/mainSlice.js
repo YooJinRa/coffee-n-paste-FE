@@ -67,7 +67,8 @@ export const __getPostFiltered = createAsyncThunk(
       const selectBrandName = payload.brandName;
       const selectMenuName = payload.menuName;
       const currPage = payload.currPage;
-      if (selectMenuName === undefined) {
+      console.log(selectBrandName, selectMenuName, currPage);
+      if (selectMenuName === undefined || selectMenuName === "") {
         const requestRes = await axios.get(
           `${URI.BASE}api/post?brand=${selectBrandName}&page=${currPage}`
         );
@@ -168,6 +169,7 @@ const mainSlice = createSlice({
       console.log(action.payload);
       state.currBrand.brandId = action.payload.brandId;
       state.currBrand.brandName = action.payload.brandName;
+      state.currMenu = { menuId: 0, menuName: "" };
     },
     selectMenu: (state, action) => {
       state.currMenu.menuId = action.payload.id;
