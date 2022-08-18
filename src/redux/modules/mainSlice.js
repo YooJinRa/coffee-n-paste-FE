@@ -35,7 +35,6 @@ export const __getDatabySelectBrand = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const requestRes = await axios.get(`${URI.BASE}api/brands`);
-      console.log(requestRes);
       return thunkAPI.fulfillWithValue(requestRes.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -54,7 +53,6 @@ export const __getUserPostList = createAsyncThunk(
           Authorization: userToken,
         },
       });
-      console.log(requestRes);
       return thunkAPI.fulfillWithValue(requestRes.data.content);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -68,16 +66,15 @@ export const __getPostFiltered = createAsyncThunk(
     try {
       const selectBrandName = payload.brandName;
       const selectMenuName = payload.menuName;
-      console.log(selectBrandName, selectMenuName);
 
       if (selectMenuName === undefined) {
         const requestRes = await axios.get(
-          `${URI.BASE}api/posts?brand=${selectBrandName}`
+          `${URI.BASE}api/post?brand=${selectBrandName}`
         );
         return thunkAPI.fulfillWithValue(requestRes.data.content);
       } else {
         const requestRes = await axios.get(
-          `${URI.BASE}api/posts?brand=${selectBrandName}&menu=${selectMenuName}`
+          `${URI.BASE}api/post?brand=${selectBrandName}&menu=${selectMenuName}`
         );
         return thunkAPI.fulfillWithValue(requestRes.data.content);
         //selectMenu에 따라 필터링해서 post들을 갖고올 예정 쿼리 나오면 작업 마무리하기
@@ -109,7 +106,6 @@ export const __getPostDetail = createAsyncThunk(
       const getDetailResponse = await axios.get(
         `${URI.BASE}api/post/${postId}`
       );
-      console.log(getDetailResponse);
       return thunkAPI.fulfillWithValue(getDetailResponse.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -148,6 +144,7 @@ const mainSlice = createSlice({
     },
     [__getPostAll.fulfilled]: (state, action) => {
       state.isLoading = false;
+
       state.posts = action.payload;
     },
     [__getPostAll.rejected]: (state, action) => {
@@ -160,6 +157,7 @@ const mainSlice = createSlice({
     },
     [__getPostFiltered.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log(action.payload);
       state.posts = action.payload;
     },
     [__getPostFiltered.rejected]: (state, action) => {

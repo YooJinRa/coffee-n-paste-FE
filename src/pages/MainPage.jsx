@@ -36,7 +36,7 @@ function MainPage(props) {
   return (
     <>
       <Header onClick={handleLoginnSubmitHandler} />
-      <NavigationGroup Ref={guestModalRef} />
+      <NavigationGroup Ref={guestModalRef} handleOpen={handleOpen} />
       {/* <button onClick={handleModalOpen}>모달을 띄워봐요</button>
       <DetailModalBody Ref={modalRef} /> */}
       <GuestModal Ref={guestModalRef} />
