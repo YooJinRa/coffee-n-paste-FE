@@ -15,7 +15,7 @@ function BrandList(props) {
       const brandName = e.target.innerText;
       setSelect(brandId);
       dispatch(selectBrand({ brandId, brandName }));
-      dispatch(__getPostFiltered({ brandId, brandName }));
+      dispatch(__getPostFiltered({ brandId, brandName, currPage: 0 }));
     },
     [select]
   );

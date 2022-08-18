@@ -24,9 +24,7 @@ function MainInterface({ Ref, handleOpen }) {
     setListOn(!listOn);
   };
 
-  const handleBlur = useCallback((e) => {
-    console.log("blured");
-  });
+  const handleBlur = useCallback((e) => {});
   return (
     <StInterFaceBorder
       id="interfaceModalBg"

@@ -9,8 +9,8 @@ import IconImage from "../../static/icon_image.png";
 const PostForm = () => {
   const navigate = useNavigate();
   const brands = useSelector((state) => state.mainSlice.brands);
-  const [ selectedBrand, setSelectedBrand ] = useState('');
-  
+  const [selectedBrand, setSelectedBrand] = useState("");
+
   // ::: 게시글 등록 폼 사용자 입력값 받아오기
   const [inputs, setInputs] = useState({
     brandId: "",
@@ -27,7 +27,7 @@ const PostForm = () => {
     const { value, name } = event.target;
 
     // ::: 브랜드에 따라 메뉴 가져오기
-    if(event.target.name === 'brandId'){
+    if (event.target.name === "brandId") {
       setSelectedBrand(event.target.value);
     }
     setInputs({
@@ -92,7 +92,7 @@ const PostForm = () => {
     };
 
     // ::: image 파일 서버 전송
-    console.log(":: formData 입력 시작!");
+
     const form = new FormData();
     form.append("image", compressedImageFile);
     try {
@@ -152,45 +152,44 @@ const PostForm = () => {
         <h2>경험을 공유해주세요!</h2>
         <StRowFormBox>
           <label>브랜드</label>
-          <select 
-            name="brandId" 
-            value={selectedBrand} 
+          <select
+            name="brandId"
+            value={selectedBrand}
             onChange={onChangePostingForm}
           >
             <option value="">브랜드를 선택해주세요!</option>
-            {brands.map((brand, index) => (
-              index !== 0 &&
-              <option 
-                key={brand.brandId} 
-                value={brand.brandId} 
-                brandname={brand.brandName}
-              >
-                {brand.brandName}
-              </option>
-            ))}
+            {brands.map(
+              (brand, index) =>
+                index !== 0 && (
+                  <option
+                    key={brand.brandId}
+                    value={brand.brandId}
+                    brandname={brand.brandName}
+                  >
+                    {brand.brandName}
+                  </option>
+                )
+            )}
           </select>
         </StRowFormBox>
 
         <StRowFormBox>
           <label>메뉴</label>
-          <select 
-            name="menuId" 
-            value={menuId} 
-            onChange={onChangePostingForm}
-          >
+          <select name="menuId" value={menuId} onChange={onChangePostingForm}>
             <option value="">메뉴를 선택해주세요!</option>
-            {brands.map((brand) => (
-              brand.brandId === Number(selectedBrand) &&
+            {brands.map(
+              (brand) =>
+                brand.brandId === Number(selectedBrand) &&
                 brand.menus.map((menu) => (
-                  <option 
-                    key={menu.menuId} 
-                    value={menu.menuId} 
+                  <option
+                    key={menu.menuId}
+                    value={menu.menuId}
                     menuname={menu.menuName}
                   >
                     {menu.menuName}
                   </option>
                 ))
-            ))}
+            )}
           </select>
         </StRowFormBox>
 
