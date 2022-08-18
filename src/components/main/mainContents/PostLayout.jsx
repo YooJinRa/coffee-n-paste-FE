@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { __getPostAll } from "../../../redux/modules/mainSlice";
+import { __getPostAll, __getPostDetail } from "../../../redux/modules/mainSlice";
 import imagesLoaded from "imagesloaded";
 import PostCard from "./PostCard";
 import styled from "styled-components";
 import ModalPortal from "../../global/ModalPortal";
 import DetailModalBody from "../detailModal/ModalDetailBody";
+import { __getCommentsByPostId } from "../../../redux/modules/commentSlice";
 
 // ::: masorny 레이아웃 구현
 const resizeGridItems = function () {
@@ -35,7 +36,7 @@ const resizeGridItems = function () {
   });
 };
 
-const PostLayout = ({ handleOpen, handleClose, modalOpened }) => {
+const PostLayout = () => {
   const dispatch = useDispatch();
   const postAll = useSelector((state) => state.mainSlice.posts);
   useEffect(() => {
@@ -48,6 +49,19 @@ const PostLayout = ({ handleOpen, handleClose, modalOpened }) => {
   window.addEventListener("resize", resizeGridItems);
   window.addEventListener("scroll", resizeGridItems);
 
+  // ::: 모달 : CreatePortal
+  const [modalOpened, setModalOpened] = useState(false);
+
+  const handleOpen = (postId) => {
+    dispatch(__getPostDetail(postId));
+    dispatch(__getCommentsByPostId(postId));
+    setModalOpened(true);
+  };
+
+  const handleClose = () => {
+    setModalOpened(false);
+  };
+  
   return (
     <StPostLayoutWrap>
       <div className="gridContainer">

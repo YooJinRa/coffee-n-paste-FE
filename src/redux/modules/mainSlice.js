@@ -10,7 +10,7 @@ const initialState = {
     {
       brandId: 0,
       brandImg:
-        "https://images.unsplash.com/photo-1660663374499-9cbf2415ffb9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80",
+        "https://image.istarbucks.co.kr/upload/common/img/main/2022/2022_Summer2_bean_bg.jpg",
       brandName: "전체",
       menus: [],
     },
