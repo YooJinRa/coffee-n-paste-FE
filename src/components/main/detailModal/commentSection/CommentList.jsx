@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import CommentCard from "./CommentCard";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { __getCommentsByPostId } from "../../../../redux/modules/commentSlice";
 
-function CommentList({ postId }) {
-  const dispatch = useDispatch();
+function CommentList() {
   const comments = useSelector((state) => state.commentSlice.comments);
   const loginUser = localStorage.getItem("userId");
-  useEffect(() => {
-    dispatch(__getCommentsByPostId(postId));
-  }, [dispatch]);
+
   return (
     <StCommentsWrap>
       {comments.map((comment) => {

@@ -2,12 +2,13 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CommentForm from "./commentSection/CommentForm";
 import CommentList from "./commentSection/CommentList";
+import { __getCommentsByPostId } from "../../../redux/modules/commentSlice";
 import { AiOutlineClose } from "react-icons/ai";
 import styled from "styled-components";
 
 function DetailModalBody({ handleClose }) {
   const postDetail = useSelector((state) => state.mainSlice.post);
-  console.log(":: DetailModalBody__postDetail :: ", postDetail);
+  const postId = postDetail.postId;
 
   return (
     <StContainer>
@@ -28,8 +29,8 @@ function DetailModalBody({ handleClose }) {
         </StDetailBodyContainer>
 
         <StDetailCommentSection>
-          <CommentList postId={postDetail.postId} />
-          <CommentForm postId={postDetail.postId} />
+          <CommentList postId={postId} />
+          <CommentForm postId={postId} />
         </StDetailCommentSection>
       </StContentsContainer>
     </StContainer>
@@ -73,7 +74,6 @@ const StContentsContainer = styled.div`
   align-items: flex-start;
   width: 50%;
   min-height: 100%;
-  /* border-left: var(--border-style); */
   padding: 1rem 1rem 0 2rem;
 
   .categoryTag span {

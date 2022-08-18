@@ -17,6 +17,7 @@ const PostForm = () => {
     menuId: "",
     content: "",
   });
+
   const [validationMessage, setValidationMessage] = useState([]);
   const [postImg, setPostImg] = useState(null);
   const [compressedImageFile, setCompressedImageFile] = useState(null);
@@ -59,7 +60,6 @@ const PostForm = () => {
       );
 
       setPostImg(finalCompressedImage);
-      console.log("preview compressedFile::", compressedFile);
     } catch (error) {
       console.log("__PostForm_ploadImage error ::", error);
       alert("이미지를 업로드 하는데 문제가 생겼습니다. 다시 시도해주세요!");
@@ -106,16 +106,8 @@ const PostForm = () => {
           },
         }
       );
-      console.log(":: postImageResponse ::", postImageResponse);
 
       // ::: 게시글 컨텐츠 업로드
-      console.log(
-        "postContentResponse ::::",
-        brandId,
-        menuId,
-        content,
-        postImageResponse
-      );
       const postContentResponse = await axios.post(
         `${URI.BASE}api/post`,
         {
@@ -130,9 +122,7 @@ const PostForm = () => {
           },
         }
       );
-      console.log(":: postContentResponse ::", postContentResponse);
     } catch (error) {
-      console.log(":: axios error::");
       console.log(error);
     }
 
@@ -168,7 +158,8 @@ const PostForm = () => {
             onChange={onChangePostingForm}
           >
             <option value="">브랜드를 선택해주세요!</option>
-            {brands.map((brand) => (
+            {brands.map((brand, index) => (
+              index !== 0 &&
               <option 
                 key={brand.brandId} 
                 value={brand.brandId} 
@@ -299,13 +290,15 @@ const StRowFormBox = styled.p`
   label {
     width: 90px;
     padding: 5px 0 0 10px;
-    font-size: 16px;
+    font-size: 1.3rem;
+    font-weight: 700;
   }
   label + select,
   label + input {
     width: calc(100% - 100px);
     height: 40px;
     background-color: var(--bg-color);
+    font-size: 1.2rem;
   }
   label + select {
     text-indent: 10px;
@@ -317,6 +310,7 @@ const StRowFormBox = styled.p`
     border: var(--border-style);
     padding: 10px;
     background-color: var(--bg-color);
+    font-size: 1.2rem;
   }
   select:focus,
   textarea:focus {

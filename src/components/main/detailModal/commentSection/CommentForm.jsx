@@ -38,7 +38,7 @@ const StFormContainer = styled.form`
     padding: 0 5px;
     width: 80%;
     border: var(--border-style);
-    :focus {
+    &:focus {
       outline: none;
     }
   }
