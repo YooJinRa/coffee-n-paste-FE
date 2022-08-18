@@ -28,8 +28,6 @@ function MainPage(props) {
     setModalOpened(true);
     dispatch(__getPostDetail(postId));
   };
-
-  console.log(postDetail);
   const handleClose = () => {
     setModalOpened(false);
   };

@@ -66,17 +66,22 @@ export const __getPostFiltered = createAsyncThunk(
     try {
       const selectBrandName = payload.brandName;
       const selectMenuName = payload.menuName;
-
+      const currPage = payload.currPage;
       if (selectMenuName === undefined) {
         const requestRes = await axios.get(
-          `${URI.BASE}api/post?brand=${selectBrandName}`
+          `${URI.BASE}api/post?brand=${selectBrandName}&page=${currPage}`
         );
-        return thunkAPI.fulfillWithValue(requestRes.data.content);
+
+        console.log(requestRes.data);
+        // const pagenationTest = await axios.get(
+        //   `${URI.BASE}api/post?brand=${selectBrandName}&page=${state.pageNumber}`
+        // );
+        return thunkAPI.fulfillWithValue(requestRes.data);
       } else {
         const requestRes = await axios.get(
-          `${URI.BASE}api/post?brand=${selectBrandName}&menu=${selectMenuName}`
+          `${URI.BASE}api/post?brand=${selectBrandName}&menu=${selectMenuName}&page=${currPage}`
         );
-        return thunkAPI.fulfillWithValue(requestRes.data.content);
+        return thunkAPI.fulfillWithValue(requestRes.data);
         //selectMenu에 따라 필터링해서 post들을 갖고올 예정 쿼리 나오면 작업 마무리하기
       }
     } catch (error) {
@@ -90,8 +95,8 @@ export const __getPostAll = createAsyncThunk(
   "main/__getPostAll",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(`${URI.BASE}api/posts`);
-      return thunkAPI.fulfillWithValue(response.data.content);
+      const response = await axios.get(`${URI.BASE}api/posts?page=${payload}`);
+      return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -131,7 +136,6 @@ export const __updateMyPost = createAsyncThunk(
           },
         }
       );
-      console.log("postUpdateResponse :::", postUpdateResponse.data);
       return thunkAPI.fulfillWithValue(postUpdateResponse.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -143,17 +147,14 @@ export const __deleteMyPost = createAsyncThunk(
   "main/__deleteMyPost",
   async (payload, thunkAPI) => {
     try {
-      console.log("~~~~~~deleteID~!!!!!", payload);
       const userToken = localStorage.getItem("userToken");
       const requestRes = await axios.delete(`${URI.BASE}api/post/${payload}`, {
         headers: {
           Authorization: userToken,
         },
       });
-      console.log(requestRes);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -190,8 +191,9 @@ const mainSlice = createSlice({
     },
     [__getPostAll.fulfilled]: (state, action) => {
       state.isLoading = false;
+      console.log(action.payload);
 
-      state.posts = action.payload;
+      state.posts.push(...action.payload.content);
     },
     [__getPostAll.rejected]: (state, action) => {
       state.isLoading = false;
@@ -203,7 +205,9 @@ const mainSlice = createSlice({
     },
     [__getPostFiltered.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      action.payload.pageable.pageNumber === 0
+        ? (state.posts = action.payload.content)
+        : state.posts.push(...action.payload.content);
     },
     [__getPostFiltered.rejected]: (state, action) => {
       state.isLoading = false;
