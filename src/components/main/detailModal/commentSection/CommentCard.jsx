@@ -29,7 +29,7 @@ function CommentCard({ author, body, loginUser, id }) {
   const handlenewBody = (e) => {
     setNewBody(e.target.value);
   };
-  console.log(isEdit);
+
   return (
     <StCommentContainer>
       {!isEdit ? (
@@ -84,6 +84,12 @@ const StCommentContainer = styled.div`
 const StInput = styled.input`
   width: 90%;
   height: 90%;
+  font-size: 1.3rem;
+  border: 0;
+  text-indent: 10px;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const StButtonGroup = styled.div`

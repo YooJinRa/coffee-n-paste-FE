@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CommentForm from "./commentSection/CommentForm";
 import CommentList from "./commentSection/CommentList";
+import { __getCommentsByPostId } from "../../../redux/modules/commentSlice";
 import { AiOutlineClose } from "react-icons/ai";
 import styled from "styled-components";
 import {
@@ -12,6 +13,7 @@ import {
 function DetailModalBody({ handleClose }) {
   const dispatch = useDispatch();
   const postDetail = useSelector((state) => state.mainSlice.post);
+  const postId = postDetail.postId;
   const loginUser = localStorage.getItem("userId");
   // 수정 여부 확인
   const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -25,7 +27,7 @@ function DetailModalBody({ handleClose }) {
   };
   // ::: 삭제하기 버튼 이벤트 실행
   const handleDeletePost = (event) => {
-    dispatch(__deleteMyPost(postDetail.postId));
+    dispatch(__deleteMyPost(postId));
     setShowUpdateForm(false);
     handleClose();
   };
@@ -103,8 +105,8 @@ function DetailModalBody({ handleClose }) {
             )}
           </StDetailBodyContainer>
           <StDetailCommentSection>
-            <CommentList postId={postDetail.postId} />
-            <CommentForm postId={postDetail.postId} />
+            <CommentList postId={postId} />
+            <CommentForm postId={postId} />
           </StDetailCommentSection>
         </StContentsContainer>
       </StContainer>

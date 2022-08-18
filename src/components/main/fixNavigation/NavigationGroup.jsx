@@ -2,7 +2,6 @@ import React, { useCallback, useRef } from "react";
 import styled from "styled-components";
 import NavButton from "./NavButton";
 import { AiOutlineArrowUp, AiOutlineUser } from "react-icons/ai";
-import MainInterface from "../userInterface/MainInterface";
 import InterfaceContainer from "../userInterface/InterfaceContainer";
 
 function NavigationGroup({ Ref, handleOpen }) {

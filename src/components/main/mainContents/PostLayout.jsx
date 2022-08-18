@@ -4,12 +4,14 @@ import {
   selectBrand,
   __getDatabySelectBrand,
   __getPostAll,
+  __getPostDetail,
 } from "../../../redux/modules/mainSlice";
 import imagesLoaded from "imagesloaded";
 import PostCard from "./PostCard";
 import styled from "styled-components";
 import ModalPortal from "../../global/ModalPortal";
 import DetailModalBody from "../detailModal/ModalDetailBody";
+import { __getCommentsByPostId } from "../../../redux/modules/commentSlice";
 
 // ::: masorny 레이아웃 구현
 const resizeGridItems = function () {
@@ -39,28 +41,31 @@ const resizeGridItems = function () {
   });
 };
 
-const PostLayout = ({ handleOpen, handleClose, modalOpened }) => {
+const PostLayout = () => {
   const dispatch = useDispatch();
   const currPage = useRef(1);
   const postAll = useSelector((state) => state.mainSlice.posts);
-  const brandSelection = useSelector((state) => state.mainSlice.currBrand);
-  const menuSelection = useSelector((state) => state.mainSlice.currMenu);
-
+  const brandSelection = useSelector(
+    (state) => state.mainSlice.currBrand.brandName
+  );
+  const menuSelection = useSelector(
+    (state) => state.mainSlice.currMenu.menuName
+  );
+  console.log(brandSelection);
   // const [flag, setFlag] = useState(false);
   const flag = useRef(0);
-  const toinfinity = () => {
-    if (brandSelection.brandId !== 0) {
-      console.log(currPage);
+  const brName = brandSelection;
+  const toinfinity = (brand, menu) => {
+    if (brandSelection !== "전체") {
       dispatch(
         __getDatabySelectBrand({
-          brandName: brandSelection.brandName,
-          menuName: menuSelection.menuName,
+          brandName: brandSelection,
+          menuName: menuSelection,
           currPage: currPage.current,
         })
       );
       currPage.current += 1;
     } else {
-      console.log(currPage);
       dispatch(__getPostAll(currPage.current));
       currPage.current += 1;
     }
@@ -92,6 +97,19 @@ const PostLayout = ({ handleOpen, handleClose, modalOpened }) => {
     currPage.current = 1;
   }, [brandSelection, menuSelection]);
 
+  // ::: 모달 : CreatePortal
+  const [modalOpened, setModalOpened] = useState(false);
+
+  const handleOpen = (postId) => {
+    dispatch(__getPostDetail(postId));
+    dispatch(__getCommentsByPostId(postId));
+    setModalOpened(true);
+  };
+
+  const handleClose = () => {
+    setModalOpened(false);
+  };
+
   return (
     <StPostLayoutWrap>
       <div className="gridContainer">
@@ -108,7 +126,7 @@ const PostLayout = ({ handleOpen, handleClose, modalOpened }) => {
   );
 };
 
-export default React.memo(PostLayout);
+export default PostLayout;
 
 const StPostLayoutWrap = styled.div`
   z-index: 0;
