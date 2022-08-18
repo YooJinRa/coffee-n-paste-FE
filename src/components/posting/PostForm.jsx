@@ -290,13 +290,15 @@ const StRowFormBox = styled.p`
   label {
     width: 90px;
     padding: 5px 0 0 10px;
-    font-size: 16px;
+    font-size: 1.3rem;
+    font-weight: 700;
   }
   label + select,
   label + input {
     width: calc(100% - 100px);
     height: 40px;
     background-color: var(--bg-color);
+    font-size: 1.2rem;
   }
   label + select {
     text-indent: 10px;
@@ -308,6 +310,7 @@ const StRowFormBox = styled.p`
     border: var(--border-style);
     padding: 10px;
     background-color: var(--bg-color);
+    font-size: 1.2rem;
   }
   select:focus,
   textarea:focus {

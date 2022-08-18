@@ -11,8 +11,9 @@ function MainImage() {
 
   return (
     <StWrap imageUrl={mainImageUrl.brandImg}>
-      {mainImageUrl.brandId !== 0 &&
-        <h1>{mainImageUrl.brandName}</h1>
+      {mainImageUrl.brandId !== 0 ?
+        <h1>{mainImageUrl.brandName}</h1> :
+        <h1 className="logoTitle">Coffee N &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paste!</h1>
       }
     </StWrap>
   );
@@ -43,7 +44,12 @@ const StWrap = styled.div`
     border-bottom: 2px solid var(--bg-color);
     font-family: var(--korean-font);
     font-size: 7rem;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
     margin-bottom: 30px;
+  }
+  .logoTitle {
+    font-family: var(--english-font);
+    font-style: italic;
   }
 `;
 
