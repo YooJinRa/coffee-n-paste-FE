@@ -1,6 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { __getPostAll, __getPostDetail } from "../../../redux/modules/mainSlice";
+import {
+  selectBrand,
+  __getDatabySelectBrand,
+  __getPostAll,
+  __getPostDetail,
+} from "../../../redux/modules/mainSlice";
 import imagesLoaded from "imagesloaded";
 import PostCard from "./PostCard";
 import styled from "styled-components";
@@ -38,16 +43,59 @@ const resizeGridItems = function () {
 
 const PostLayout = () => {
   const dispatch = useDispatch();
+  const currPage = useRef(1);
   const postAll = useSelector((state) => state.mainSlice.posts);
-  useEffect(() => {
-    dispatch(__getPostAll());
-    resizeGridItems();
-  }, [dispatch]);
+  const brandSelection = useSelector(
+    (state) => state.mainSlice.currBrand.brandName
+  );
+  const menuSelection = useSelector(
+    (state) => state.mainSlice.currMenu.menuName
+  );
+  console.log(brandSelection);
+  // const [flag, setFlag] = useState(false);
+  const flag = useRef(0);
+  const brName = brandSelection;
+  const toinfinity = (brand, menu) => {
+    if (brandSelection !== "전체") {
+      dispatch(
+        __getDatabySelectBrand({
+          brandName: brandSelection,
+          menuName: menuSelection,
+          currPage: currPage.current,
+        })
+      );
+      currPage.current += 1;
+    } else {
+      dispatch(__getPostAll(currPage.current));
+      currPage.current += 1;
+    }
+  };
 
-  // ::: load : 이미지 사이즈를 확인할 때 등. 외부 자원이 로드된 후이기 때문에 스타일이 적용된 상태이므로 화면에 뿌려지는 요소의 실제 크기를 확인할 수 있음
-  window.addEventListener("load", resizeGridItems);
-  window.addEventListener("resize", resizeGridItems);
-  window.addEventListener("scroll", resizeGridItems);
+  const listenScrolling = (e) => {
+    const html = e.target.scrollingElement;
+    const currScroll = html.scrollTop;
+    const maxScroll = html.scrollTopMax;
+    const targetHeight = maxScroll * 0.73;
+    if (currScroll > targetHeight) {
+      if (flag.current === 0) {
+        flag.current += 1;
+        toinfinity();
+      }
+    }
+  };
+  window.addEventListener("scroll", listenScrolling);
+
+  useEffect(() => {
+    dispatch(__getPostAll(0));
+  }, []);
+
+  useEffect(() => {
+    resizeGridItems();
+    flag.current = 0;
+  }, [postAll]);
+  useEffect(() => {
+    currPage.current = 1;
+  }, [brandSelection, menuSelection]);
 
   // ::: 모달 : CreatePortal
   const [modalOpened, setModalOpened] = useState(false);
@@ -61,7 +109,7 @@ const PostLayout = () => {
   const handleClose = () => {
     setModalOpened(false);
   };
-  
+
   return (
     <StPostLayoutWrap>
       <div className="gridContainer">
@@ -84,7 +132,6 @@ const StPostLayoutWrap = styled.div`
   z-index: 0;
   position: relative;
   padding: 10px;
-  height: 1000px;
   .gridContainer {
     padding: 3rem 0;
     display: grid;

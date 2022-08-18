@@ -14,10 +14,10 @@ function BrandList(props) {
       const brandId = parseInt(e.target.id);
       const brandName = e.target.innerText;
       setSelect(brandId);
-      dispatch(selectBrand(brandId));
+      dispatch(selectBrand({ brandId, brandName }));
       dispatch(__getPostFiltered({ brandId, brandName }));
     },
-    [dispatch]
+    [select]
   );
   return (
     <StList>
