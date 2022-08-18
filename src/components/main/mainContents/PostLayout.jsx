@@ -38,7 +38,6 @@ const resizeGridItems = function () {
 const PostLayout = ({ handleOpen, handleClose, modalOpened }) => {
   const dispatch = useDispatch();
   const postAll = useSelector((state) => state.mainSlice.posts);
-
   useEffect(() => {
     dispatch(__getPostAll());
     resizeGridItems();
