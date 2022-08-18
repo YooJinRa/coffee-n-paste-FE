@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const PostCard = ({post, handleOpen}) => {
-
+  console.log(":: postCard ::", post.postId);
   return (
     <StPostCardWrap className="gridItem" onClick={() => handleOpen(post.postId)}>
       <img className="content" src={post.postImg} alt={post.postId} />

@@ -102,6 +102,7 @@ export const __getPostAll = createAsyncThunk(
 export const __getPostDetail = createAsyncThunk(
   "main/__getPostDetail",
   async (postId, thunkAPI) => {
+    console.log(":: postId::", postId);
     try {
       const getDetailResponse = await axios.get(
         `${URI.BASE}api/post/${postId}`
@@ -112,6 +113,60 @@ export const __getPostDetail = createAsyncThunk(
     }
   }
 );
+
+// // ::: 게시글 수정하기
+// export const __updateMyPost = createAsyncThunk(
+//   "post/__updateMyPost",
+//   async (payload, thunkAPI) => {
+//     try {
+//       const userToken = localStorage.getItem("userToken");
+//       const postUpdateResponse = await axios.put(
+//         `${URI.BASE}api/post/${payload.postId}`,
+//         {
+//           content: payload.content,
+//           postImg: payload.postImg
+//         },
+//         {
+//           headers: {
+//             Authorization: userToken,
+//           },
+//         }
+//       );
+//       console.log("postUpdateResponse :::", postUpdateResponse.data);
+//       return thunkAPI.fulfillWithValue(postUpdateResponse.data);
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
+
+// export const __deleteMyPost = createAsyncThunk(
+//   "post/__deleteMyPost",
+//   async (payload, thunkAPI) => {
+//     try {
+//       console.log("~~~~~~deleteID~!!!!!", payload);
+//       const userToken = localStorage.getItem("userToken");
+//       const requestRes = await axios.delete(
+//         `${URI.BASE}api/post/${payload}`,
+//         {
+//           headers: {
+//             Authorization: userToken,
+//           },
+//         }
+//       );
+//       return thunkAPI.fulfillWithValue(requestRes.data.msg.split(" ").at(-1));
+//     } catch (error) {
+//       console.log(error);
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
+
+
+
+
+
+
 
 const mainSlice = createSlice({
   name: "mainSlice",
@@ -182,6 +237,8 @@ const mainSlice = createSlice({
       state.isLoading = true;
     },
     [__getPostDetail.fulfilled]: (state, action) => {
+      console.log(":: getPostDetail :: action.payload");
+      console.log(action.payload);
       state.isLoading = false;
       state.post = action.payload;
     },
@@ -189,6 +246,36 @@ const mainSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    // // ::: 본인이 작성한 게시글 수정
+    // [__updateMyPost.pending]: (state, action) => {
+    //   state.isLoading = true;
+    // },
+    // [__updateMyPost.fulfilled]: (state, action) => {
+    //   state.isLoading = false
+    //   state.posts = state.posts.map((post) => (
+    //     post.postId === action.payload.postId
+    //       ? action.payload
+    //       : post
+    //   ));
+    // },
+    // [__updateMyPost.rejected]: (state, action) => {
+    //   state.isLoading = false;
+    //   state.error = action.payload;
+    // },
+    // // ::: 본인이 작성한 게시글 삭제
+    // [__deleteMyPost.pending]: (state, action) => {
+    //   state.isLoading = true;
+    // },
+    // [__deleteMyPost.fulfilled]: (state, action) => {
+    //   state.isLoading = false;
+    //   state.posts = state.posts.filter(
+    //     (post) => post.postId !== parseInt(action.payload)
+    //   );
+    // },
+    // [__deleteMyPost.rejected]: (state, action) => {
+    //   state.isLoading = false;
+    //   state.error = action.payload;
+    // }
   },
 });
 export const { selectBrand, selectMenu } = mainSlice.actions;
