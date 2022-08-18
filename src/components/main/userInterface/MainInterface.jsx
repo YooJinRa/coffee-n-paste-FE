@@ -1,12 +1,12 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux/es/exports";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { userLogout } from "../../../redux/modules/userSlice";
 import MyPostList from "./MyPostList";
 
-function MainInterface({ Ref }) {
+function MainInterface({ Ref, handleOpen }) {
   const dispatch = useDispatch();
-  const toggleRef = useRef(false);
+
   const [listOn, setListOn] = useState(false);
   const handleLogout = useCallback(
     (e) => {
@@ -23,9 +23,16 @@ function MainInterface({ Ref }) {
     e.stopPropagation();
     setListOn(!listOn);
   };
-  console.log(toggleRef.current);
+
+  const handleBlur = useCallback((e) => {
+    console.log("blured");
+  });
   return (
-    <StInterFaceBorder id="interfaceModalBg" listOn={listOn}>
+    <StInterFaceBorder
+      id="interfaceModalBg"
+      listOn={listOn}
+      onToggle={handleBlur}
+    >
       <StInterfaceContainer id="interfaceModalContents" listOn={listOn}>
         {!listOn ? (
           <>
@@ -36,7 +43,7 @@ function MainInterface({ Ref }) {
           </>
         ) : (
           <>
-            <MyPostList onClick={handleListToggle} />
+            <MyPostList onClick={handleListToggle} handleOpen={handleOpen} />
           </>
         )}
       </StInterfaceContainer>
@@ -46,29 +53,79 @@ function MainInterface({ Ref }) {
 const StInterFaceBorder = styled.div`
   position: absolute;
   bottom: 0;
-  width: 208px;
+  width: 228px;
   padding: 4px;
   height: ${({ listOn }) => (listOn ? "328px" : "168px")};
 
   background-color: black;
-  clip-path: polygon(
-    0% 0%,
-    92.5% 0,
-    92.5% 71%,
-    100% 77.9%,
-    92.5% 84.7%,
-    92.5% 100%,
-    0 100%
-  );
+  ${({ listOn }) => {
+    switch (listOn) {
+      case false: {
+        return css`
+          clip-path: polygon(
+            0% 0%,
+            92.5% 0,
+            92.5% 71%,
+            100% 77.9%,
+            92.5% 84.7%,
+            92.5% 100%,
+            0 100%
+          );
+        `;
+      }
+      case true: {
+        return css`
+          clip-path: polygon(
+            0% 0%,
+            92.5% 0,
+            92.5% 82%,
+            100% 87%,
+            92.5% 92%,
+            92.5% 100%,
+            0 100%
+          );
+        `;
+      }
+    }
+  }}
 `;
 const StInterfaceContainer = styled.div`
   position: relative;
   padding-left: 11px;
-  width: 200px;
+  width: 220px;
   height: ${({ listOn }) => (listOn ? "320px" : "160px")};
   background-color: var(--blue-color);
   border: none;
-  clip-path: polygon(0% 0%, 92% 0, 92% 73%, 99% 79%, 92% 85%, 92% 100%, 0 100%);
+  ${({ listOn }) => {
+    switch (listOn) {
+      case false: {
+        return css`
+          clip-path: polygon(
+            0% 0%,
+            92% 0,
+            92% 73%,
+            99% 79%,
+            92% 85%,
+            92% 100%,
+            0 100%
+          );
+        `;
+      }
+      case true: {
+        return css`
+          clip-path: polygon(
+            0% 0%,
+            92.5% 0,
+            92.5% 83.2%,
+            100% 87.8%,
+            92.5% 92.5%,
+            92.5% 100%,
+            0 100%
+          );
+        `;
+      }
+    }
+  }}
   display: flex;
   flex-direction: column;
   justify-content: center;

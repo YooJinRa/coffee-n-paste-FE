@@ -6,7 +6,6 @@ import { selectBrand, __getPostFiltered } from "../../redux/modules/mainSlice";
 
 function BrandList(props) {
   const BRANDS = useSelector((state) => state.mainSlice.brands);
-  console.log(BRANDS);
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.userSlice.userToken);
   const [select, setSelect] = useState(0);

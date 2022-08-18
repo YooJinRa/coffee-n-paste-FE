@@ -31,20 +31,16 @@ function RegisterForm({ onLogin }) {
     console.log(isValidPassword);
 
     if (!isValidName) {
-      console.log("name check");
       return setValidate({ ...validate, name: false });
     }
 
     if (!isValidId) {
-      console.log("id check");
       return setValidate({ ...validate, name: true, id: false });
     }
     if (!isValidPassword) {
-      console.log("pw check");
       return setValidate({ ...validate, name: true, id: true, pw: false });
     }
     if (pw !== rePw) {
-      console.log("rePw check");
       return setValidate({
         ...validate,
         name: true,

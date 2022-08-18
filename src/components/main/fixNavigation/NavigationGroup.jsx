@@ -5,12 +5,12 @@ import { AiOutlineArrowUp, AiOutlineUser } from "react-icons/ai";
 import MainInterface from "../userInterface/MainInterface";
 import InterfaceContainer from "../userInterface/InterfaceContainer";
 
-function NavigationGroup({ Ref }) {
+function NavigationGroup({ Ref, handleOpen }) {
   const handleScrollTop = useCallback(() => {
     window.scrollTo(0, 0);
   });
   const interfaceModalRef = useRef();
-  const handleClickModalBg = (e) => {
+  const handleClickModalBg = useCallback((e) => {
     e.stopPropagation();
     const clickedEl = e.target.localName;
     if (
@@ -20,23 +20,21 @@ function NavigationGroup({ Ref }) {
       !e.target.id?.includes("Modal") &&
       interfaceModalRef.current
     ) {
-      console.log("eeeeeeeeee");
       interfaceModalRef.current.classList.remove("modalOn");
     }
-  };
+  }, []);
   window.addEventListener("click", handleClickModalBg);
   const handleInterFaceToggle = useCallback(() => {
     const userToken = localStorage.getItem("userToken");
     if (userToken === null) {
       Ref.current.classList.add("modalOn");
     } else {
-      console.log("fffffffffffffffff");
       interfaceModalRef.current.classList.toggle("modalOn");
     }
   });
   return (
     <StContainer>
-      <InterfaceContainer Ref={interfaceModalRef} />
+      <InterfaceContainer Ref={interfaceModalRef} handleOpen={handleOpen} />
       <NavButton bgColor="green" onclick={handleInterFaceToggle}>
         <AiOutlineUser />
       </NavButton>
