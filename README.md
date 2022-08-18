@@ -58,8 +58,8 @@
 - 파일 삭제 🗑delete : ~~~ 삭제에 대한 커밋
 
 ### 폴더 및 컴포넌트 구성
-<img src='https://github.com/YooJinRa/coffee-n-paste-FE/tree/master/documentImage/directoryFile1.png' width="100px">
-<img src='https://github.com/YooJinRa/coffee-n-paste-FE/tree/master/documentImage/directoryFile2.png' width="100px">
+<img src='https://github.com/YooJinRa/coffee-n-paste-FE/blob/master/documentImage/directoryFile1.png' width="100px" />
+<img src='https://github.com/YooJinRa/coffee-n-paste-FE/blob/master/documentImage/directoryFile2.png' width="100px" />
 
 
 
